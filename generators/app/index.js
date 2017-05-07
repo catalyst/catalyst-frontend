@@ -6,10 +6,6 @@ const path = require('path');
 const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
-  initializing() {
-    this.composeWith(require.resolve('../gulp'));
-  }
-
   prompting() {
     this.log(
       chalk.green('\nWelcome to the'),
@@ -45,9 +41,27 @@ module.exports = class extends Generator {
             }
           ]
         }
-
+      },
+      {
+        'type': 'list',
+        'name': 'buildType',
+        'message': 'What kind of build process do you need?',
+        'choices': [
+          {
+            'name': 'Gulp: for SASS compilation, with options for jQuery and/or Bootstrap integration',
+            'short': 'Gulp',
+            'value': 'gulp'
+          },
+          {
+            'name': 'Webpack: for ES6 JS projects, with options for React integration',
+            'short': 'Webpack',
+            'value': 'webpack'
+          }
+        ]
       }
     ];
+
+    // TODO add questions for src and dist folder names
 
     return this.prompt(prompts).then(props => {
       this.props = props;
@@ -63,5 +77,19 @@ module.exports = class extends Generator {
       mkdirp(this.props.name);
       this.destinationRoot(this.destinationPath(this.props.name));
     }
+
+    if (this.props.buildType === 'gulp') {
+      this.composeWith(require.resolve('../gulp'),  { 'name': this.props.name });
+    } else  {
+      // it's Webpack
+      this.log(chalk.red('Webpack build functionality coming soon!'));
+    }
+  }
+
+  writing() {
+    this.fs.copy(
+      this.templatePath('.gitignore'),
+      this.destinationPath('.gitignore')
+    );
   }
 };
