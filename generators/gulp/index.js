@@ -54,10 +54,10 @@ module.exports = class extends Generator {
       {
         'type': 'confirm',
         'name': 'bootstrapjs',
-        'message': `Do you want to add Bootstrap's JS files into your JavaScript bundle?`,
+        'message': `Do you want to add Bootstrap's JS into your JavaScript bundle?`,
         'default': true,
         'when': (answers) => {
-          return (answers.js && answers.bootstrap);
+          return (answers.js && answers.bootstrap && answers.jquery);
         }
       }
     ];
@@ -102,7 +102,6 @@ module.exports = class extends Generator {
     mkdirp(`${this.options.src}/img`);
     if (this.props.js) { mkdirp(`${this.options.src}/js`); }
 
-    // TODO re-enable this later (works correctly)
-    // this.npmInstall(this.packages, { 'save-dev': true });
+    this.npmInstall(this.packages, { 'save-dev': true });
   }
 };
