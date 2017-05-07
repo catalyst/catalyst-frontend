@@ -77,7 +77,7 @@ module.exports = class extends Generator {
     }
 
     if (this.props.bootstrap) {
-      this.packages.push('bootstrap'); // TODO bootstrap @ current alpha
+      this.packages.push('bootstrap@4.0.0-alpha.6'); // DUE TO THIS BEING ALPHA, IT NEEDS MANUAL UPDATE HERE
     }
   }
 
@@ -86,6 +86,12 @@ module.exports = class extends Generator {
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
       { name: this.options.name }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('gulpfile.js'),
+      this.destinationPath('gulpfile.js'),
+      { options: this.props }
     );
   }
 
