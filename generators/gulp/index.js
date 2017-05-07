@@ -99,6 +99,12 @@ module.exports = class extends Generator {
       this.destinationPath('gulpfile.js'),
       { options: this.props, src: this.options.src, dist: this.options.dist }
     );
+
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
+      { options: this.props, name: this.options.name, src: this.options.src, dist: this.options.dist }
+    );
   }
 
   install() {
