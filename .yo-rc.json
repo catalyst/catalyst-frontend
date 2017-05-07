@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Jen Zajac",
+      "authorEmail": "jen@catalyst.net.nz",
+      "authorUrl": "https://github.com/jenofdoom"
+    }
+  }
+}

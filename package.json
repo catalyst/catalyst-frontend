@@ -1,0 +1,62 @@
+{
+  "name": "generator-catalyst-frontend",
+  "version": "0.0.0",
+  "description": "A configurable frontend build pipeline that caters for everything from simple SASS compilation only, right through to ES2015 plus React.",
+  "homepage": "https://gitlab.catalyst.net.nz/frontend/generator-catalyst-frontend",
+  "author": {
+    "name": "Jen Zajac",
+    "email": "jen@catalyst.net.nz",
+    "url": "https://github.com/jenofdoom"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "frontend",
+    "gulp",
+    "bootstrap",
+    "jquery",
+    "webpack",
+    "react",
+    "es6",
+    "es2015",
+    "sass",
+    "scss",
+    "yeoman-generator"
+  ],
+  "devDependencies": {
+    "yeoman-test": "^1.6.0",
+    "yeoman-assert": "^3.0.0",
+    "nsp": "^2.6.3",
+    "eslint": "^3.18.0",
+    "eslint-config-xo-space": "^0.16.0",
+    "jest": "^19.0.2",
+    "jest-cli": "^19.0.1"
+  },
+  "dependencies": {
+    "yeoman-generator": "^1.0.0",
+    "chalk": "^1.1.3",
+    "yosay": "^2.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "prepublish": "nsp check",
+    "pretest": "eslint . --fix",
+    "test": "jest"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "jest": true,
+      "node": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.catalyst.net.nz:frontend/generator-catalyst-frontend.git"
+  },
+  "license": "MIT"
+}
