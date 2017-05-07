@@ -1,36 +1,67 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
-const yosay = require('yosay');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
-  prompting() {
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the fantastic ' + chalk.red('generator-catalyst-frontend') + ' generator!'
-    ));
+  initializing() {
+    this.composeWith(require.resolve('../gulp'));
+  }
 
-    const prompts = [{
-      type: 'confirm',
-      name: 'someAnswer',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+  prompting() {
+    this.log(
+      chalk.green('\nWelcome to the'),
+      chalk.blue('catalyst-frontend'),
+      chalk.green('build pipeline generator.')
+    );
+
+    this.log('We just need to ask you some questions to get started!\n');
+
+    const prompts = [
+      {
+        'type': 'input',
+        'name': 'name',
+        'message': 'What is the name of your project?',
+        'default': kebabCase(path.basename(this.destinationPath())),
+        'filter': input => kebabCase(input)
+      },
+      {
+        'type': 'list',
+        'name': 'newFolder',
+        'message': 'Where do you want your build process to be installed?',
+        'choices': (answers) => {
+          return [
+            {
+              'name': 'In the current directory',
+              'short': 'Current directory',
+              'value': false
+            },
+            {
+              'name': 'In a new directory',
+              'short': `New directory '${answers.name}' created`,
+              'value': true
+            }
+          ]
+        }
+
+      }
+    ];
 
     return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
       this.props = props;
     });
   }
 
-  writing() {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
-  }
-
-  install() {
-    this.installDependencies();
+  default() {
+    if (this.props.newFolder) {
+      this.log(
+        'Creating a new folder ',
+        chalk.green(this.props.name)
+      );
+      mkdirp(this.props.name);
+      this.destinationRoot(this.destinationPath(this.props.name));
+    }
   }
 };

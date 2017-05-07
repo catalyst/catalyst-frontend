@@ -1,0 +1,14 @@
+{
+  "name": "<%= name %>-frontend-build",
+  "version": "1.0.0",
+  "description": "Frontend build process created by generator-catalyst-frontend",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/gulp build",
+    "start": "./node_modules/.bin/gulp"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {}
+}
