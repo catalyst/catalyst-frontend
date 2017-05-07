@@ -47,9 +47,7 @@ module.exports = class extends Generator {
         'name': 'jquery',
         'message': 'Do you want to add jQuery into your JavaScript bundle?',
         'default': true,
-        'when': (answers) => {
-          return answers.js;
-        }
+        'when': answers => answers.js
       },
       {
         'type': 'confirm',
@@ -59,6 +57,13 @@ module.exports = class extends Generator {
         'when': (answers) => {
           return (answers.js && answers.bootstrap && answers.jquery);
         }
+      },
+      {
+        'type': 'confirm',
+        'name': 'tether',
+        'message': `Do you want to use Bootstrap's tooltips?`,
+        'default': false,
+        'when': answers => answers.bootstrapjs
       }
     ];
 

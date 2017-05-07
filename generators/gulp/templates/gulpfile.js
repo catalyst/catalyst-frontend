@@ -54,7 +54,8 @@ gulp.task('scss', () => {
 <% if (options.js) { -%>
 gulp.task('js', function() {
   return gulp.src([<% if (options.jquery) { %>
-      './node_modules/jquery/dist/jquery.js',<% } %><% if (options.bootstrapjs) { %>
+      './node_modules/jquery/dist/jquery.js',<% } %><% if (options.tether) { %>
+      './node_modules/tether/dist/js/tether.js',<% } %><% if (options.bootstrapjs) { %>
       './node_modules/bootstrap/dist/js/bootstrap.js',<% } %>
       PATHS.src.js
     ])
