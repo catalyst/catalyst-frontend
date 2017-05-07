@@ -1,5 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator');
+const mkdirp = require('mkdirp');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -91,11 +92,16 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js'),
-      { options: this.props }
+      { options: this.props, src: this.options.src, dist: this.options.dist }
     );
   }
 
   install() {
+    mkdirp(`${this.options.src}/scss`);
+    mkdirp(`${this.options.src}/fonts`);
+    mkdirp(`${this.options.src}/img`);
+    if (this.props.js) { mkdirp(`${this.options.src}/js`); }
+
     // TODO re-enable this later (works correctly)
     // this.npmInstall(this.packages, { 'save-dev': true });
   }

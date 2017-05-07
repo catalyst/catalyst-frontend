@@ -43,6 +43,20 @@ module.exports = class extends Generator {
         }
       },
       {
+        'type': 'input',
+        'name': 'src',
+        'message': 'Name of the directory where your uncompiled files will live:',
+        'default': 'src',
+        'filter': input => kebabCase(input)
+      },
+      {
+        'type': 'input',
+        'name': 'dist',
+        'message': 'Name of the directory where your built files are will be written:',
+        'default': 'dist',
+        'filter': input => kebabCase(input)
+      },
+      {
         'type': 'list',
         'name': 'buildType',
         'message': 'What kind of build process do you need?',
@@ -61,8 +75,6 @@ module.exports = class extends Generator {
       }
     ];
 
-    // TODO add questions for src and dist folder names
-
     return this.prompt(prompts).then(props => {
       this.props = props;
     });
@@ -70,16 +82,12 @@ module.exports = class extends Generator {
 
   default() {
     if (this.props.newFolder) {
-      this.log(
-        'Creating a new folder ',
-        chalk.green(this.props.name)
-      );
       mkdirp(this.props.name);
       this.destinationRoot(this.destinationPath(this.props.name));
     }
 
     if (this.props.buildType === 'gulp') {
-      this.composeWith(require.resolve('../gulp'),  { 'name': this.props.name });
+      this.composeWith(require.resolve('../gulp'),  { 'name': this.props.name, 'src': this.props.src, 'dist': this.props.dist });
     } else  {
       // it's Webpack
       this.log(chalk.red('Webpack build functionality coming soon!'));
@@ -88,8 +96,14 @@ module.exports = class extends Generator {
 
   writing() {
     this.fs.copy(
+      this.templatePath('.editorconfig'),
+      this.destinationPath('.editorconfig')
+    );
+
+    this.fs.copyTpl(
       this.templatePath('.gitignore'),
-      this.destinationPath('.gitignore')
+      this.destinationPath('.gitignore'),
+      { dist: this.props.dist }
     );
   }
 };

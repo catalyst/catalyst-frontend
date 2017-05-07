@@ -12,28 +12,28 @@ const uglifyjs = require('gulp-uglify');
 
 const PATHS = {
   'src': {
-    'root': './src/**',
-    <% if (options.js) { %>'js': './src/js/**/*.js',<% } %>
-    'scss': './src/scss/**/*.scss'
+    'root': './<%= src %>/**',<% if (options.js) { %>
+    'js': './<%= src %>/js/**/*.js',<% } %>
+    'scss': './<%= src %>/scss/**/*.scss'
   },
   'dist': {
-    'root': './dist/',
-    <% if (options.js) { %>'js': './dist/js/',<% } %>
-    'css': './dist/css/'
+    'root': './<%= dist %>/',<% if (options.js) { %>
+    'js': './<%= dist %>/js/',<% } %>
+    'css': './<%= dist %>/css/'
   }
 }
 
 gulp.task('copy-files', () => {
-  return gulp.src([PATHS.src.root, '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js]<% } %>)
+  return gulp.src([PATHS.src.root, '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js<% } %>])
     .pipe(gulp.dest(PATHS.dist.root));
 });
 
 gulp.task('scss', () => {
   return gulp.src(PATHS.src.scss)
     .pipe(sass({
-        includePaths: [
-          <% if (options.bootstrap) { %>'./node_modules/bootstrap/scss/'<% } %>
-        ]
+        includePaths: [<% if (options.bootstrap) { %>
+          './node_modules/bootstrap/scss/'
+        <% } %>]
       })
       .on('error', sass.logError)
     )
