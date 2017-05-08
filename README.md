@@ -29,6 +29,16 @@ yo catalyst-frontend
 You'll be asked questions about your project and the build pipeline will be
 built according to your answers.
 
+## Storing configuration
+
+When you run the generator a `.yo-rc.json` file will be generated that remembers
+the answers you provided. If you want to force the project to re-ask you the
+questions next time, just re-run with the `--reconfigure` flag set.
+
+```bash
+yo catalyst-frontend --reconfigure
+```
+
 ## License
 
 MIT © [Jen Zajac](https://github.com/jenofdoom)

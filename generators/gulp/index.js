@@ -15,6 +15,8 @@ module.exports = class extends Generator {
       'gulp-sourcemaps',
       'postcss-flexbugs-fixes'
     ];
+
+    this.props = this.options.reconfigure ? {} : this.config.getAll();
   }
 
   prompting() {
@@ -23,7 +25,8 @@ module.exports = class extends Generator {
         'type': 'confirm',
         'name': 'bootstrap',
         'message': `Do you want to add Bootstrap to your project?`,
-        'default': false
+        'default': false,
+        'when': typeof(this.props.bootstrap) !== "boolean"
       },
       {
         'type': 'list',
@@ -40,22 +43,25 @@ module.exports = class extends Generator {
             'short': 'JS support',
             'value': true
           }
-        ]
+        ],
+        'when': typeof(this.props.js) !== "boolean"
       },
       {
         'type': 'confirm',
         'name': 'jquery',
         'message': 'Do you want to add jQuery into your JavaScript bundle?',
         'default': true,
-        'when': answers => answers.js
+        'when': answers => {
+          return answers.js && typeof(this.props.jquery !== "boolean");
+        }
       },
       {
         'type': 'confirm',
         'name': 'bootstrapjs',
         'message': `Do you want to add Bootstrap's JS into your JavaScript bundle?`,
         'default': true,
-        'when': (answers) => {
-          return (answers.js && answers.bootstrap && answers.jquery);
+        'when': answers => {
+          return (answers.js && answers.bootstrap && answers.jquery && typeof(this.props.bootstrapjs) !== "boolean");
         }
       },
       {
@@ -63,7 +69,9 @@ module.exports = class extends Generator {
         'name': 'tether',
         'message': `Do you want to use Bootstrap's tooltips?`,
         'default': false,
-        'when': answers => answers.bootstrapjs
+        'when': answers => {
+          return answers.bootstrapjs && typeof(this.props.tether !== "boolean");
+        }
       }
     ];
 
@@ -105,6 +113,8 @@ module.exports = class extends Generator {
       this.destinationPath('README.md'),
       { options: this.props, name: this.options.name, src: this.options.src, dist: this.options.dist }
     );
+
+    this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 
   install() {

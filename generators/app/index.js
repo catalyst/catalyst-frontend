@@ -6,14 +6,24 @@ const path = require('path');
 const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts)
+
+    this.option('reconfigure');
+
+    this.props = this.options.reconfigure ? {} : this.config.getAll();
+  }
+
   prompting() {
     this.log(
       chalk.green('\nWelcome to the'),
       chalk.blue('catalyst-frontend'),
-      chalk.green('build pipeline generator.')
+      chalk.green('build pipeline generator.\n')
     );
 
-    this.log('We just need to ask you some questions to get started!\n');
+    if (!this.props.buildType) {
+      this.log('We just need to ask you some questions to get started!\n');
+    }
 
     const prompts = [
       {
@@ -21,7 +31,8 @@ module.exports = class extends Generator {
         'name': 'name',
         'message': 'What is the name of your project?',
         'default': kebabCase(path.basename(this.destinationPath())),
-        'filter': input => kebabCase(input)
+        'filter': input => kebabCase(input),
+        'when': !this.props.name
       },
       {
         'type': 'list',
@@ -40,21 +51,24 @@ module.exports = class extends Generator {
               'value': true
             }
           ]
-        }
+        },
+        'when': typeof(this.props.newFolder) !== "boolean"
       },
       {
         'type': 'input',
         'name': 'src',
         'message': 'Name of the directory where your uncompiled files will live:',
         'default': 'src',
-        'filter': input => kebabCase(input)
+        'filter': input => kebabCase(input),
+        'when': !this.props.src
       },
       {
         'type': 'input',
         'name': 'dist',
         'message': 'Name of the directory where your built files are will be written:',
         'default': 'dist',
-        'filter': input => kebabCase(input)
+        'filter': input => kebabCase(input),
+        'when': !this.props.dist
       },
       {
         'type': 'list',
@@ -71,23 +85,29 @@ module.exports = class extends Generator {
             'short': 'Webpack',
             'value': 'webpack'
           }
-        ]
+        ],
+        'when': !this.props.buildType
       }
     ];
 
     return this.prompt(prompts).then(props => {
-      this.props = props;
+      this.props = Object.assign({}, this.props, props);
     });
   }
 
   default() {
     if (this.props.newFolder) {
-      mkdirp(this.props.name);
-      this.destinationRoot(this.destinationPath(this.props.name));
+      // mkdirp(this.props.name);
+      // this.destinationRoot(this.destinationPath(this.props.name));
     }
 
     if (this.props.buildType === 'gulp') {
-      this.composeWith(require.resolve('../gulp'),  { 'name': this.props.name, 'src': this.props.src, 'dist': this.props.dist });
+      this.composeWith(require.resolve('../gulp'),  {
+        'reconfigure': this.options.reconfigure,
+        'name': this.props.name,
+        'src': this.props.src,
+        'dist': this.props.dist
+      });
     } else  {
       // it's Webpack
       this.log(chalk.red('Webpack build functionality coming soon!'));
@@ -95,15 +115,18 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copy(
-      this.templatePath('.editorconfig'),
-      this.destinationPath('.editorconfig')
-    );
+    // this.fs.copy(
+    //   this.templatePath('.editorconfig'),
+    //   this.destinationPath('.editorconfig')
+    // );
+    //
+    // this.fs.copyTpl(
+    //   this.templatePath('.gitignore'),
+    //   this.destinationPath('.gitignore'),
+    //   { dist: this.props.dist }
+    // );
 
-    this.fs.copyTpl(
-      this.templatePath('.gitignore'),
-      this.destinationPath('.gitignore'),
-      { dist: this.props.dist }
-    );
+    this.config.save();
+    this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 };
