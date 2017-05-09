@@ -37,47 +37,52 @@ whenever you save changes. `control-c` will quit the watch process.
 ├── .gitignore
 ├── gulpfile.js
 ├── package.json
-└── <%= src %>
+<% if (options.flatStructure) { -%>
+└── scss
+<% } else { -%>
+└── <%= options.src %>
     ├── fonts
     ├── img<% if (options.js) { %>
     ├── js<% } %>
     └── scss
+<% } %>
 ```
 
 ### SCSS compilation
 
-All `.scss` files in the `<%= src %>/scss/` folder will be compiled. Use the
+All `.scss` files in the `<%= options.src %>/scss/` folder will be compiled. Use the
 [underscore import functionality](http://sass-lang.com/guide#topic-5) to create
 includes of module files so you don't end up will more than one `.css` file in
-`<%=dist %>/css/`.
+`<%= options.dist %>/css/`.
 
 [Autoprefixer](https://github.com/postcss/autoprefixer#autoprefixer-) (so you
 don't need to write vendor prefixes) and CSS minification is included in the
 compile process.
 
-<% if (options.bootstrap) { %>
+<% if (options.bootstrap) { -%>
 [Bootstrap](https://v4-alpha.getbootstrap.com/getting-started/introduction/)
-is included. [TODO] stub files for bootstrap<% } %>
+is included. [TODO] stub files for bootstrap<% } -%>
 
-<% if (options.js) { %>
+<% if (options.js) { -%>
 ### JS concatenation and minification
 
-The JavaScript files in your `<%= src %>` folder will all be concatenated into
-one minified file named `bundle.js` in your `<%= dist %>` folder. You can name
+The JavaScript files in your `<%= options.src %>` folder will all be concatenated into
+one minified file named `bundle.js` in your `<%= options.dist %>` folder. You can name
 them whatever you like.
 
 <% if (options.jquery) { %>[jQuery](https://jquery.com/) will also be included
 in the bundle file<% } %><% if (options.bootstrapjs) { %>, as will [Bootstrap's JS](https://v4-alpha.getbootstrap.com/getting-started/javascript/#data-attributes)<% } %><% if (options.tether) { %> and [Tether](http://tether.io/)<% } %>.
-
 <% } -%>
 
+<% if (!options.flatStructure) { -%>
 ### Other static files are copied
 
-Any other files you have in your `<%= src %>` folder (like images, fonts,
-favicons etc) will be copied across to the `<%= dist %>` folder so you can
+Any other files you have in your `<%= options.src %>` folder (like images, fonts,
+favicons etc) will be copied across to the `<%= options.dist %>` folder so you can
 include them as normal. As well as the pre-configured `img` and `fonts` folders,
 you can create any other subfolders as you please (or just put files in the root
-of `<%= src %>`).
+of `<%= options.src %>`).
+<% } -%>
 
 ## Deploying
 

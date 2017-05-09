@@ -1,6 +1,7 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
+const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -47,12 +48,48 @@ module.exports = class extends Generator {
         'when': typeof(this.props.js) !== "boolean"
       },
       {
+        'type': 'list',
+        'name': 'flatStructure',
+        'message': 'Do you want to keep your compiled and uncompiled files in separate trees, or use a flat structure?',
+        'choices': [
+          {
+            'name': 'In seperate nested trees, e.g. /myproject/src/scss and /myproject/dist/css',
+            'short': 'Nested',
+            'value': false
+          },
+          {
+            'name': 'In a flat structure, e.g. /myproject/scss and /myproject/css',
+            'short': 'Flat',
+            'value': true
+          }
+        ],
+        'when': answers => {
+          return (answers.js === false || this.props.js === false) && (typeof(this.props.flatStructure) !== "boolean");
+        }
+      },
+      {
+        'type': 'input',
+        'name': 'src',
+        'message': 'Name of the directory where your uncompiled files will live:',
+        'default': 'src',
+        'filter': input => kebabCase(input),
+        'when': !this.props.src && !this.props.flatStructure
+      },
+      {
+        'type': 'input',
+        'name': 'dist',
+        'message': 'Name of the directory where your built files will be written:',
+        'default': 'dist',
+        'filter': input => kebabCase(input),
+        'when': !this.props.dist && !this.props.flatStructure
+      },
+      {
         'type': 'confirm',
         'name': 'jquery',
         'message': 'Do you want to add jQuery into your JavaScript bundle?',
         'default': true,
         'when': answers => {
-          return answers.js && typeof(this.props.jquery !== "boolean");
+          return (answers.js || this.props.js) && (typeof(this.props.jquery) !== "boolean");
         }
       },
       {
@@ -61,7 +98,7 @@ module.exports = class extends Generator {
         'message': `Do you want to add Bootstrap's JS into your JavaScript bundle?`,
         'default': true,
         'when': answers => {
-          return (answers.js && answers.bootstrap && answers.jquery && typeof(this.props.bootstrapjs) !== "boolean");
+          return ((answers.js || this.props.js) && (answers.bootstrap || this.props.bootstrap) && (answers.jquery || this.props.jquery) && (typeof(this.props.bootstrapjs) !== "boolean"));
         }
       },
       {
@@ -70,13 +107,13 @@ module.exports = class extends Generator {
         'message': `Do you want to use Bootstrap's tooltips?`,
         'default': false,
         'when': answers => {
-          return answers.bootstrapjs && typeof(this.props.tether !== "boolean");
+          return (answers.bootstrapjs || this.props.bootstrapjs) && (typeof(this.props.tether) !== "boolean");
         }
       }
     ];
 
     return this.prompt(prompts).then(props => {
-      this.props = props;
+      this.props = Object.assign({}, this.props, props);
     });
   }
 
@@ -105,23 +142,33 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js'),
-      { options: this.props, src: this.options.src, dist: this.options.dist }
+      { options: this.props }
     );
 
     this.fs.copyTpl(
       this.templatePath('README.md'),
       this.destinationPath('README.md'),
-      { options: this.props, name: this.options.name, src: this.options.src, dist: this.options.dist }
+      { options: this.props, name: this.options.name }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('.gitignore'),
+      this.destinationPath('.gitignore'),
+      { dist: this.props.dist }
     );
 
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 
   install() {
-    mkdirp(`${this.options.src}/scss`);
-    mkdirp(`${this.options.src}/fonts`);
-    mkdirp(`${this.options.src}/img`);
-    if (this.props.js) { mkdirp(`${this.options.src}/js`); }
+    if (this.props.flatStructure) {
+      mkdirp('scss');
+    } else {
+      mkdirp(`${this.props.src}/scss`);
+      mkdirp(`${this.props.src}/fonts`);
+      mkdirp(`${this.props.src}/img`);
+      if (this.props.js) { mkdirp(`${this.props.src}/js`); }
+    }
 
     this.npmInstall(this.packages, { 'save-dev': true });
   }

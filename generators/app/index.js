@@ -55,22 +55,6 @@ module.exports = class extends Generator {
         'when': typeof(this.props.newFolder) !== "boolean"
       },
       {
-        'type': 'input',
-        'name': 'src',
-        'message': 'Name of the directory where your uncompiled files will live:',
-        'default': 'src',
-        'filter': input => kebabCase(input),
-        'when': !this.props.src
-      },
-      {
-        'type': 'input',
-        'name': 'dist',
-        'message': 'Name of the directory where your built files are will be written:',
-        'default': 'dist',
-        'filter': input => kebabCase(input),
-        'when': !this.props.dist
-      },
-      {
         'type': 'list',
         'name': 'buildType',
         'message': 'What kind of build process do you need?',
@@ -104,9 +88,7 @@ module.exports = class extends Generator {
     if (this.props.buildType === 'gulp') {
       this.composeWith(require.resolve('../gulp'),  {
         'reconfigure': this.options.reconfigure,
-        'name': this.props.name,
-        'src': this.props.src,
-        'dist': this.props.dist
+        'name': this.props.name
       });
     } else  {
       // it's Webpack
@@ -118,12 +100,6 @@ module.exports = class extends Generator {
     this.fs.copy(
       this.templatePath('.editorconfig'),
       this.destinationPath('.editorconfig')
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('.gitignore'),
-      this.destinationPath('.gitignore'),
-      { dist: this.props.dist }
     );
 
     this.config.save();

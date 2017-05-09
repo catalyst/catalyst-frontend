@@ -10,16 +10,26 @@ const concatjs = require('gulp-concat');
 const uglifyjs = require('gulp-uglify');
 <% } -%>
 
+<% if (options.flatStructure) { -%>
 const PATHS = {
   'src': {
-    'root': './<%= src %>/**',<% if (options.js) { %>
-    'js': './<%= src %>/js/**/*.js',<% } %>
-    'scss': './<%= src %>/scss/**/*.scss'
+    'scss': './scss/**/*.scss'
   },
   'dist': {
-    'root': './<%= dist %>/',<% if (options.js) { %>
-    'js': './<%= dist %>/js/',<% } %>
-    'css': './<%= dist %>/css/'
+    'css': './css/'
+  }
+}
+<% } else { %>
+const PATHS = {
+  'src': {
+    'root': './<%= options.src %>/**',<% if (options.js) { %>
+    'js': './<%= options.src %>/js/**/*.js',<% } %>
+    'scss': './<%= options.src %>/scss/**/*.scss'
+  },
+  'dist': {
+    'root': './<%= options.dist %>/',<% if (options.js) { %>
+    'js': './<%= options.dist %>/js/',<% } %>
+    'css': './<%= options.dist %>/css/'
   }
 }
 
@@ -27,6 +37,7 @@ gulp.task('copy-files', () => {
   return gulp.src([PATHS.src.root, '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js<% } %>])
     .pipe(gulp.dest(PATHS.dist.root));
 });
+<% } -%>
 
 gulp.task('scss', () => {
   return gulp.src(PATHS.src.scss)
@@ -67,10 +78,10 @@ gulp.task('js', function() {
 });
 <% } -%>
 
-gulp.task('build', ['copy-files', 'scss'<% if (options.js) { %>, 'js'<% } %>]);
+gulp.task('build', [<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>]);
 
 gulp.task('watch', () => {
-  gulp.watch(PATHS.src.root, ['build']);
+  gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, ['build']);
 });
 
 gulp.task('default', ['build', 'watch']);
