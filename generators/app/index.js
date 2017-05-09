@@ -97,8 +97,8 @@ module.exports = class extends Generator {
 
   default() {
     if (this.props.newFolder) {
-      // mkdirp(this.props.name);
-      // this.destinationRoot(this.destinationPath(this.props.name));
+      mkdirp(this.props.name);
+      this.destinationRoot(this.destinationPath(this.props.name));
     }
 
     if (this.props.buildType === 'gulp') {
@@ -115,16 +115,16 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    // this.fs.copy(
-    //   this.templatePath('.editorconfig'),
-    //   this.destinationPath('.editorconfig')
-    // );
-    //
-    // this.fs.copyTpl(
-    //   this.templatePath('.gitignore'),
-    //   this.destinationPath('.gitignore'),
-    //   { dist: this.props.dist }
-    // );
+    this.fs.copy(
+      this.templatePath('.editorconfig'),
+      this.destinationPath('.editorconfig')
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('.gitignore'),
+      this.destinationPath('.gitignore'),
+      { dist: this.props.dist }
+    );
 
     this.config.save();
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
