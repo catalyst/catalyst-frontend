@@ -1,8 +1,8 @@
 {
-  "name": "generator-catalyst-frontend",
+  "name": "catalyst-frontend",
   "version": "0.0.0",
   "description": "A configurable frontend build pipeline that caters for everything from simple SASS compilation only, right through to ES2015 plus React.",
-  "homepage": "https://gitlab.catalyst.net.nz/frontend/generator-catalyst-frontend",
+  "homepage": "https://gitlab.catalyst.net.nz/frontend/catalyst-frontend",
   "author": {
     "name": "Jen Zajac",
     "email": "jen@catalyst.net.nz",
@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "chalk": "^1.1.3",
-    "lodash.kebabcase": "~4.1.1",
-    "yeoman-environment": "~1.6.6",
+    "lodash.kebabcase": "^4.1.1",
+    "yeoman-environment": "^1.6.6",
     "yeoman-generator": "^1.0.0"
   },
   "jest": {
@@ -60,7 +60,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.catalyst.net.nz:frontend/generator-catalyst-frontend.git"
+    "url": "git@gitlab.catalyst.net.nz:frontend/catalyst-frontend.git"
   },
   "license": "MIT"
 }
