@@ -3,12 +3,12 @@
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) (we assume you have pre-installed
-[node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions))
-and clone this repository:
+We assume you have pre-installed
+[node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) -
+now clone this repository (note: later on this will be replaced by just npm
+installing it - needs to be published first):
 
 ```bash
-sudo npm install -g yo
 git clone git@gitlab.catalyst.net.nz:frontend/generator-catalyst-frontend.git
 cd generator-catalyst-frontend
 ```
@@ -20,10 +20,11 @@ sudo npm link
 cd ..
 ```
 
-Then generate your new project:
+Then generate your new project (do this from the location where you want your
+project to be located):
 
 ```bash
-yo catalyst-frontend
+catalyst-frontend
 ```
 
 You'll be asked questions about your project and the build pipeline will be

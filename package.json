@@ -11,6 +11,9 @@
   "files": [
     "generators"
   ],
+  "bin": {
+    "catalyst-frontend": "bin/catalyst-frontend.js"
+  },
   "main": "generators/index.js",
   "keywords": [
     "frontend",
@@ -37,6 +40,7 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "lodash.kebabcase": "~4.1.1",
+    "yeoman-environment": "~1.6.6",
     "yeoman-generator": "^1.0.0"
   },
   "jest": {
