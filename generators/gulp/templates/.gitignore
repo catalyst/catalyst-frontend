@@ -2,4 +2,4 @@
 node_modules
 npm-debug.log
 coverage
-<% if (options.flatStructure) { %>css<% } else { %><%= dist %><% } %>
+<% if (options.flatStructure) { %>css<% } else { %><%= options.dist %><% } %>
