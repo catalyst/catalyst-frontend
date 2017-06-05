@@ -42,8 +42,10 @@ gulp.task('copy-files', () => {
 gulp.task('scss', () => {
   return gulp.src(PATHS.src.scss)
     .pipe(sass({
-        includePaths: [<% if (options.bootstrap) { %>
+        includePaths: [<% if (options.bootstrap4) { %>
           './node_modules/bootstrap/scss/'
+          <% } else if (options.bootstrap) { %>
+          './node_modules/bootstrap-sass/assets/stylesheets/'
         <% } %>]
       })
       .on('error', sass.logError)
@@ -66,8 +68,9 @@ gulp.task('scss', () => {
 gulp.task('js', function() {
   return gulp.src([<% if (options.jquery) { %>
       './node_modules/jquery/dist/jquery.js',<% } %><% if (options.tether) { %>
-      './node_modules/tether/dist/js/tether.js',<% } %><% if (options.bootstrapjs) { %>
-      './node_modules/bootstrap/dist/js/bootstrap.js',<% } %>
+      './node_modules/tether/dist/js/tether.js',<% } %><% if (options.bootstrapjs && options.bootstrap4) { %>
+      './node_modules/bootstrap/dist/js/bootstrap.js',<% } else if (options.bootstrapjs) { %>
+      './node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',<% } %>
       PATHS.src.js
     ])
     .pipe(sourcemaps.init())

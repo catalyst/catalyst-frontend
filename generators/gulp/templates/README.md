@@ -48,6 +48,9 @@ whenever you save changes. `control-c` will quit the watch process.
 <% } %>
 ```
 
+To learn about `.editorconfig` and to see if there is a plugin for your code
+editor, see [the EditorConfig website](http://editorconfig.org/).
+
 ### SCSS compilation
 
 All `.scss` files in the <% if (options.flatStructure) { %>`<%= options.src %>/`<% }
@@ -60,9 +63,10 @@ else { %>`<%= options.dist %>/css/`<% } %>.
 don't need to write vendor prefixes) and CSS minification is included in the
 compile process.
 
-<% if (options.bootstrap) { -%>
-[Bootstrap](https://v4-alpha.getbootstrap.com/getting-started/introduction/) is
-included, as well as a file for you to put in your overrides of its
+<% if (options.bootstrap) {
+%><% if (options.bootstrap4) {
+%>[Bootstrap](https://v4-alpha.getbootstrap.com/getting-started/introduction/)<% } else { %>[Bootstrap](http://getbootstrap.com/)<% } %>
+is included, as well as a file for you to put in your overrides of its
 variables, at <% if (options.flatStructure) { %>`<%= options.src
 %>/_variables-bootstrap.scss`<% } else { %>`<%= options.src
 %>/scss/_variables-bootstrap.scss`<% } %><% } -%>.
