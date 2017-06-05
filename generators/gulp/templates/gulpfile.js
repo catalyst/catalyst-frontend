@@ -13,10 +13,10 @@ const uglifyjs = require('gulp-uglify');
 <% if (options.flatStructure) { -%>
 const PATHS = {
   'src': {
-    'scss': './scss/**/*.scss'
+    'scss': './<%= options.src %>/**/*.scss'
   },
   'dist': {
-    'css': './css/'
+    'css': './<%= options.dist %>/'
   }
 }
 <% } else { %>

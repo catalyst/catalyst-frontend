@@ -71,7 +71,13 @@ module.exports = class extends Generator {
         'type': 'input',
         'name': 'src',
         'message': 'Name of the directory where your uncompiled files will live:',
-        'default': 'src',
+        'default': answers => {
+          if (answers.flatStructure || this.props.flatStructure) {
+            return 'scss';
+          }
+
+          return 'src';
+        },
         'filter': input => kebabCase(input),
         'when': !this.props.src && !this.props.flatStructure
       },
@@ -79,8 +85,21 @@ module.exports = class extends Generator {
         'type': 'input',
         'name': 'dist',
         'message': 'Name of the directory where your built files will be written:',
-        'default': 'dist',
+        'default': answers => {
+          if (answers.flatStructure || this.props.flatStructure) {
+            return 'css';
+          }
+
+          return 'dist';
+        },
         'filter': input => kebabCase(input),
+        'validate': (input, answers) => {
+          if (input === answers.src) {
+            return "Folder names for uncompiled and built files must be different."
+          }
+
+          return true;
+        },
         'when': !this.props.dist && !this.props.flatStructure
       },
       {
@@ -162,7 +181,7 @@ module.exports = class extends Generator {
 
   install() {
     if (this.props.flatStructure) {
-      mkdirp('scss');
+      mkdirp(`${this.props.src}`);
     } else {
       mkdirp(`${this.props.src}/scss`);
       mkdirp(`${this.props.src}/fonts`);
