@@ -61,8 +61,11 @@ don't need to write vendor prefixes) and CSS minification is included in the
 compile process.
 
 <% if (options.bootstrap) { -%>
-[Bootstrap](https://v4-alpha.getbootstrap.com/getting-started/introduction/)
-is included. [TODO] stub files for bootstrap<% } -%>
+[Bootstrap](https://v4-alpha.getbootstrap.com/getting-started/introduction/) is
+included, as well as a file for you to put in your overrides of its
+variables, at <% if (options.flatStructure) { %>`<%= options.src
+%>/_variables-bootstrap.scss`<% } else { %>`<%= options.src
+%>/scss/_variables-bootstrap.scss`<% } %><% } -%>.
 
 <% if (options.js) { -%>
 ### JS concatenation and minification

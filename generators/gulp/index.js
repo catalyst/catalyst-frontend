@@ -154,6 +154,8 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    let scssPath = this.props.flatStructure ? `${this.props.src}` : `${this.props.src}/scss`;
+
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
@@ -178,6 +180,24 @@ module.exports = class extends Generator {
       { options: this.props }
     );
 
+    this.fs.copyTpl(
+      this.templatePath('scss/index.scss'),
+      this.destinationPath(`${scssPath}/index.scss`),
+      { options: this.props }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('scss/_variables-project.scss'),
+      this.destinationPath(`${scssPath}/_variables-project.scss`)
+    );
+
+    if (this.props.bootstrap) {
+      this.fs.copyTpl(
+        this.templatePath('scss/_variables-bootstrap.scss'),
+        this.destinationPath(`${scssPath}/_variables-bootstrap.scss`)
+      );
+    }
+
     if (this.props.bootstrap || this.props.js) {
       this.fs.copyTpl(
         this.templatePath('.retireignore.json'),
@@ -190,9 +210,7 @@ module.exports = class extends Generator {
   }
 
   install() {
-    if (this.props.flatStructure) {
-      mkdirp(`${this.props.src}`);
-    } else {
+    if (!this.props.flatStructure) {
       mkdirp(`${this.props.src}/scss`);
       mkdirp(`${this.props.src}/fonts`);
       mkdirp(`${this.props.src}/img`);

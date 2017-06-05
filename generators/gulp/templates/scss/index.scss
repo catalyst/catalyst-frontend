@@ -1,0 +1,10 @@
+// This index file should contain imports only.
+
+// Variables and libraries imports
+@import 'variables-project'; // for any custom project variables
+<% if (options.bootstrap) { %>@import 'variables-bootstrap'; // override bootstrap variables - import prior to bootstrap
+@import 'bootstrap';  // from node_modules/bootstrap/scss via gulpfile include path<% } %>
+<% if (options.flatStructure) { %>// @import '../../bootstrap/starterkits/sass/scss/overrides.scss'; // Drupal Bootstrap - uncomment to use
+<% } %>
+// Base styling and module styling imports
+/* add imports here, e.g. @import 'base/_base.scss'; */
