@@ -38,7 +38,7 @@ whenever you save changes. `control-c` will quit the watch process.
 ├── gulpfile.js
 ├── package.json
 <% if (options.flatStructure) { -%>
-└── scss
+└── <%= options.src %>
 <% } else { -%>
 └── <%= options.src %>
     ├── fonts
@@ -50,10 +50,11 @@ whenever you save changes. `control-c` will quit the watch process.
 
 ### SCSS compilation
 
-All `.scss` files in the `<%= options.src %>/scss/` folder will be compiled. Use the
+All `.scss` files in the <% if (options.flatStructure) { %>`<%= options.src %>/`<% }
+else { %>`<%= options.src %>/scss/`<% } %> folder will be compiled. Use the
 [underscore import functionality](http://sass-lang.com/guide#topic-5) to create
-includes of module files so you don't end up will more than one `.css` file in
-`<%= options.dist %>/css/`.
+includes of module files so you don't end up with more than one `.css` file in <% if (options.flatStructure) { %>`<%= options.dist %>/`<% }
+else { %>`<%= options.dist %>/css/`<% } %>.
 
 [Autoprefixer](https://github.com/postcss/autoprefixer#autoprefixer-) (so you
 don't need to write vendor prefixes) and CSS minification is included in the

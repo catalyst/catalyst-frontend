@@ -1,7 +1,7 @@
 {
   "name": "<%= name %>-frontend-build",
   "version": "1.0.0",
-  "description": "Frontend build process created by generator-catalyst-frontend",
+  "description": "Frontend build process created by catalyst-frontend",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
