@@ -15,7 +15,7 @@ root):
 npm install -g catalyst-frontend
 ```
 
-## Useage
+## Usage
 
 From the location where you want your project to be located, generate your new
 project:
