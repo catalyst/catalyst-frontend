@@ -1,0 +1,15 @@
+[<% if (options.bootstrap) { %>
+  {
+		"component": "bootstrap",
+		"identifiers" : { "issue": "20184" },
+		"justification" : "User data should never be used in a data- attribute."
+	},
+  {
+    "path" : "node_modules/tether/docs",
+    "justification" : "Old jQuery only used in Tether's documentation."
+  },
+  {
+    "path" : "node_modules/tether/examples",
+    "justification" : "Old jQuery only used in Tether's documentation."
+  }
+<% } %>]

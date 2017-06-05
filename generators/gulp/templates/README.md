@@ -97,9 +97,51 @@ Note that by default these files are __not__ kept in version control (to avoid
 conflicts), so your project deployment process should include this build
 process.
 
-## Keeping project dependancies up to date
+## Keeping project dependencies up to date
 
-[TODO] ncu and retire
+It's a good idea to keep up to date with the latest versions of your
+dependencies (although you'll need to manually vet if an upgrade has breaking
+changes to your application, usually by looking at their release log - hopefully
+you have automated tests to help detect regressions).
+
+There is a command you can run to figure out if your project dependencies are
+behind the latest versions:
+
+```
+npm run deps:check
+```
+
+There is also a command to force update all your dependencies (this is the one
+you need to think about before running) by updating your `package.json` and
+updating:
+
+```
+npm run deps:update
+```
+
+<% if (options.js) { -%>Both of these commands will also run a security check
+against all of your dependencies, telling you if there are any security
+advisories, using [retire.js](http://retirejs.github.io/retire.js/).
+
+If there are packages that `retire` indicates have security issues but you have
+determined that those security issues don't affect you, you can create a
+`.retireignore.json` file in your project root which documents exceptions<% if
+(!options.flatStructure) { %> (a default one to document some exceptions for
+Bootstrap's JavaScript has already been added)<% } %>. For example:
+
+```
+[
+  {
+    "component": "bootstrap",
+    "identifiers" : { "issue": "20184" },
+    "justification" : "User data should never be used in a data- attribute."
+  },
+  {
+    "path" : "node_modules/tether/docs",
+    "justification" : "Old jQuery only used in Tether's documentation."
+  }
+]
+```<% } %>
 
 ## Extending the build process
 
