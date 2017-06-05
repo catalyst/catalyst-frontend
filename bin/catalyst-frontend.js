@@ -12,10 +12,10 @@ if (options.reconfigure) {
   options = {};
 }
 
-env.lookup(function () {
-  env.run('catalyst-frontend', options, function (err) {
-    if (err) {
-      console.log(err);
-    }
-  });
+env.register(require.resolve('../generators/app/index.js'), 'catalyst-frontend');
+
+env.run('catalyst-frontend', options, function (err) {
+  if (err) {
+    console.log(err);
+  }
 });
