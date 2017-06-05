@@ -8,13 +8,10 @@
     "email": "jen@catalyst.net.nz",
     "url": "https://github.com/jenofdoom"
   },
-  "files": [
-    "generators"
-  ],
   "bin": {
-    "catalyst-frontend": "bin/catalyst-frontend.js"
+    "catalyst-frontend": "./bin/catalyst-frontend.js"
   },
-  "main": "generators/index.js",
+  "main": "./generators/app/index.js",
   "keywords": [
     "frontend",
     "gulp",
