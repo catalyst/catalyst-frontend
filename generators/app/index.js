@@ -90,9 +90,12 @@ module.exports = class extends Generator {
         'reconfigure': this.options.reconfigure,
         'name': this.props.name
       });
-    } else  {
+    } else {
       // it's Webpack
-      this.log(chalk.red('Webpack build functionality coming soon!'));
+      this.composeWith(require.resolve('../webpack'),  {
+        'reconfigure': this.options.reconfigure,
+        'name': this.props.name
+      });
     }
   }
 

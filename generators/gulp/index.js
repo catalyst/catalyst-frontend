@@ -174,6 +174,12 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
+      this.templatePath('.editorconfig'),
+      this.destinationPath('.editorconfig'),
+      { options: this.props }
+    );
+
+    this.fs.copyTpl(
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js'),
       { options: this.props }

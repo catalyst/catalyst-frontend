@@ -1,0 +1,6 @@
+// this styles index should only contain imports of libraries and base styles.<% if (options.react) { %>
+// styles for particular components should be included directly from the component.<% } %>
+
+@import "base-styles/variables"; // variables - include these wherever they are needed
+<% if (options.bootstrap) { %>@import "~bootstrap/scss/bootstrap";  // bootstrap<% } %>
+@import "base-styles/base"; // body, typography, basic elements

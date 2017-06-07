@@ -35,8 +35,10 @@ whenever you save changes. `control-c` will quit the watch process.
 ```
 ├── .editorconfig
 ├── .gitignore
+├── .retireignore.json
 ├── gulpfile.js
 ├── package.json
+├── README.md
 <% if (options.flatStructure) { -%>
 └── <%= options.src %>
 <% } else { -%>
