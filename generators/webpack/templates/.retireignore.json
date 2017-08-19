@@ -1,10 +1,16 @@
 [
   {
-    "path" : "node_modules/webpack-dev-server",
-    "justification" : "Only used in dev. This avoids the reporting of some minor jQuery issues."
+    "component": "brace-expansion",
+    "version" : "1.1.6",
+    "justification" : "brace-expansion is only ever used locally by ncu."
   },
   {
-    "path" : "node_modules/tether",
-    "justification" : "Only used in dev (by webpack-dev-server). This avoids the reporting of some minor jQuery issues."
-  }
+    "path" : "node_modules/webpack-dev-server",
+    "justification" : "Only used in dev. This avoids the reporting of some minor jQuery issues."
+  }<% if (options.bootstrap) { %>,
+  {
+		"component": "bootstrap",
+		"identifiers" : { "issue": "20184" },
+		"justification" : "User data should never be used in a data- attribute."
+	}<% } %>
 ]
