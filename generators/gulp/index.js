@@ -35,7 +35,9 @@ module.exports = class extends Generator {
         'name': 'bootstrap4',
         'message': `Do you want to use the Bootstrap 4 alpha?`,
         'default': true,
-        'when': typeof(this.props.bootstrap4) !== "boolean"
+        'when': answers => {
+          return typeof(this.props.bootstrap4) !== "boolean" && answers.bootstrap === true;
+        }
       },
       {
         'type': 'list',
@@ -156,7 +158,7 @@ module.exports = class extends Generator {
     }
 
     if (this.props.bootstrap4) {
-      this.packages.push('bootstrap@4.0.0-alpha.6'); // DUE TO THIS BEING ALPHA, IT NEEDS MANUAL UPDATE HERE
+      this.packages.push('bootstrap@4.0.0-beta'); // DUE TO THIS BEING BETA, IT NEEDS MANUAL UPDATE HERE
     } else if (this.props.bootstrap) {
       this.packages.push('bootstrap-sass');
     }
