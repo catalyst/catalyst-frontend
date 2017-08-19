@@ -19,6 +19,11 @@ module.exports = class extends Generator {
     ];
 
     this.props = this.options.reconfigure ? {} : this.config.getAll();
+
+    // convert legacy 'tether' option to new name, 'tooltips'
+    if (typeof(this.props.tether) === "boolean")  {
+      this.props.tooltips = this.props.tether;
+    }
   }
 
   prompting() {
@@ -33,7 +38,7 @@ module.exports = class extends Generator {
       {
         'type': 'confirm',
         'name': 'bootstrap4',
-        'message': `Do you want to use the Bootstrap 4 alpha?`,
+        'message': `Do you want to use the Bootstrap 4 beta?`,
         'default': true,
         'when': answers => {
           return typeof(this.props.bootstrap4) !== "boolean" && answers.bootstrap === true;
@@ -132,11 +137,11 @@ module.exports = class extends Generator {
       },
       {
         'type': 'confirm',
-        'name': 'tether',
+        'name': 'tooltips',
         'message': `Do you want to use Bootstrap's tooltips?`,
         'default': false,
         'when': answers => {
-          return (answers.bootstrapjs || this.props.bootstrapjs) && (typeof(this.props.tether) !== "boolean");
+          return (answers.bootstrapjs || this.props.bootstrapjs) && (typeof(this.props.tooltips) !== "boolean");
         }
       }
     ];
@@ -161,6 +166,10 @@ module.exports = class extends Generator {
       this.packages.push('bootstrap@4.0.0-beta'); // DUE TO THIS BEING BETA, IT NEEDS MANUAL UPDATE HERE
     } else if (this.props.bootstrap) {
       this.packages.push('bootstrap-sass');
+    }
+
+    if (this.props.bootstrap4 && this.props.tooltips) {
+      this.packages.push('popper.js');
     }
   }
 

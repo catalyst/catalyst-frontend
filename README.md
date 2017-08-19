@@ -99,7 +99,6 @@ catalyst-frontend --reconfigure
 * Avoid JS minification on dev builds in Gulp pipeline
 * Integrate BrowserSync into Gulp pipeline
 * Ask for project setup parameters e.g. tabs vs whitespaces
-* Integrate popper.js for Bootstrap 4 Gulp (and remove Tether)
 * Add React hot module loader
 
 ## License

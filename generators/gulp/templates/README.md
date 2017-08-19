@@ -2,7 +2,7 @@
 
 ## Before you start
 
-If you don't yet have the frontend dependancies installed (if there's no
+If you don't yet have the frontend dependencies installed (if there's no
 `node_modules` folder in this directory) you need to install them. It's a good
 idea to also make sure we're using a recent version of
 [Node.js](https://nodejs.org/en/) installed - in a terminal run:
@@ -65,13 +65,10 @@ else { %>`<%= options.dist %>/css/`<% } %>.
 don't need to write vendor prefixes) and CSS minification is included in the
 compile process.
 
-<% if (options.bootstrap) {
-%><% if (options.bootstrap4) {
-%>[Bootstrap](https://v4-alpha.getbootstrap.com/getting-started/introduction/)<% } else { %>[Bootstrap](http://getbootstrap.com/)<% } %>
-is included, as well as a file for you to put in your overrides of its
-variables, at <% if (options.flatStructure) { %>`<%= options.src
-%>/_variables-bootstrap.scss`<% } else { %>`<%= options.src
-%>/scss/_variables-bootstrap.scss`<% } %><% } -%>.
+<% if (options.bootstrap) { %>[Bootstrap](http://getbootstrap.com/) is included,
+as well as a file for you to put in your overrides of its variables, at <% if
+(options.flatStructure) { %>`<%= options.src %>/_variables-bootstrap.scss`<% }
+else { %>`<%= options.src %>/scss/_variables-bootstrap.scss`<% } %><% } -%>.
 
 <% if (options.js) { -%>
 ### JS concatenation and minification
@@ -81,7 +78,7 @@ one minified file named `bundle.js` in your `<%= options.dist %>` folder. You ca
 them whatever you like.
 
 <% if (options.jquery) { %>[jQuery](https://jquery.com/) will also be included
-in the bundle file<% } %><% if (options.bootstrapjs) { %>, as will [Bootstrap's JS](https://v4-alpha.getbootstrap.com/getting-started/javascript/#data-attributes)<% } %><% if (options.tether) { %> and [Tether](http://tether.io/)<% } %>.
+in the bundle file<% } %><% if (options.bootstrapjs) { %>, as will [Bootstrap's JS](https://v4-alpha.getbootstrap.com/getting-started/javascript/#data-attributes)<% } %><% if (options.tooltips && options.bootstrap4) { %> and [Popper.js](https://popper.js.org/)<% } else if  (options.tooltips) { %> and [Tether](http://tether.io/)<% } %>.
 <% } -%>
 
 <% if (!options.flatStructure) { -%>
