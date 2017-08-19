@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  }<% if (options.react) { %>,
+  "plugins": [
+    "react"
+  ]<% } %>,
+  "extends": [
+    "eslint:recommended"<% if (options.react) { %>,
+    "plugin:react/recommended"<% } %>
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true<% if (options.react) { %>,
+      "jsx": true<% } %>
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": [
+      "warn",
+      2
+    ],
+    "linebreak-style": [
+      "warn",
+      "unix"
+    ],
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "semi": [
+      "warn",
+      "never"
+    ],
+    "no-console": ["warn"],
+    "no-unused-vars": ["warn"]
+  }
+}

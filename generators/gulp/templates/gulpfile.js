@@ -67,8 +67,8 @@ gulp.task('scss', () => {
 <% if (options.js) { -%>
 gulp.task('js', function() {
   return gulp.src([<% if (options.jquery) { %>
-      './node_modules/jquery/dist/jquery.js',<% } %><% if (options.tether) { %>
-      './node_modules/tether/dist/js/tether.js',<% } %><% if (options.bootstrapjs && options.bootstrap4) { %>
+      './node_modules/jquery/dist/jquery.js',<% } %><% if (options.tooltips && options.bootstrap4) { %>
+      './node_modules/popper.js/dist/umd/popper.js',<% } else if (options.tooltips) { %>'./node_modules/tether/dist/js/tether.js',<% } %><% if (options.bootstrapjs && options.bootstrap4) { %>
       './node_modules/bootstrap/dist/js/bootstrap.js',<% } else if (options.bootstrapjs) { %>
       './node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',<% } %>
       PATHS.src.js
