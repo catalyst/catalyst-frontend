@@ -123,7 +123,7 @@ module.exports = class extends Generator {
     }
 
     if (this.props.bootstrap) {
-      this.packages.push('bootstrap@4.0.0-beta'); // DUE TO THIS BEING BETA, IT NEEDS MANUAL UPDATE HERE
+      this.packages.push('bootstrap');
     }
   }
 
