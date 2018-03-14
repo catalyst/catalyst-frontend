@@ -28,6 +28,7 @@ module.exports = class extends Generator {
       'style-loader',
       'url-loader',
       'webpack',
+      'webpack-cli',
       'webpack-dev-server',
       'webpack-merge'
     ];

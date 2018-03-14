@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf ./<%= options.dist %> && ./node_modules/.bin/webpack -p",
-    "start": "./node_modules/.bin/webpack-dev-server --hot --inline",
+    "start": "./node_modules/.bin/webpack-dev-server --hot --inline --mode development",
     "deps:check": "./node_modules/.bin/npm-check-updates && ./node_modules/.bin/retire",
     "deps:update": "./node_modules/.bin/npm-check-updates -u && ./node_modules/.bin/npm-check-updates -a && npm install && ./node_modules/.bin/retire"<% if (options.jest) { %>,
     "test": "./node_modules/.bin/jest",
