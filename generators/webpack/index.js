@@ -1,5 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator');
+const chalk = require('chalk');
 const mkdirp = require('mkdirp');
 const kebabCase = require('lodash.kebabcase');
 
@@ -250,5 +251,11 @@ module.exports = class extends Generator {
     if (this.props.react) { mkdirp(`${this.props.src}/components`) };
 
     this.npmInstall(this.packages, { 'save-dev': true });
+  }
+
+  end() {
+    this.log(
+      chalk.blue('\n\nComplete!')
+    );
   }
 };

@@ -1,1 +1,3 @@
 // See node_modules/bootstrap/scss/_variables.scss for possible values.
+
+<% if (!options.bootstrap4) { %>$icon-font-path: '/fonts/bootstrap/'; // customise as needed <% } %>

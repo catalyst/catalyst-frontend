@@ -1,5 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator');
+const chalk = require('chalk');
 const mkdirp = require('mkdirp');
 const kebabCase = require('lodash.kebabcase');
 
@@ -52,7 +53,7 @@ module.exports = class extends Generator {
           }
         ],
         'when': answers => {
-          return typeof(this.props.bootstrap4) !== "boolean" && answers.bootstrap === true;
+          return typeof(this.props.bootstrap4) !== "boolean" && (answers.bootstrap === true || this.props.bootstrap === true);
         }
       },
       {
@@ -154,6 +155,15 @@ module.exports = class extends Generator {
         'when': answers => {
           return (answers.bootstrapjs || this.props.bootstrapjs) && (typeof(this.props.tooltips) !== "boolean");
         }
+      },
+      {
+        'type': 'confirm',
+        'name': 'drupalbootstrap',
+        'message': `Are you using Drupal and Drupal's Bootstrap theme?`,
+        'default': false,
+        'when': answers => {
+          return ((!answers.bootstrap4 && !this.props.bootstrap4) && (answers.bootstrap || this.props.bootstrap) && (typeof(this.props.drupalbootstrap) !== "boolean"));
+        }
       }
     ];
 
@@ -231,7 +241,8 @@ module.exports = class extends Generator {
     if (this.props.bootstrap) {
       this.fs.copyTpl(
         this.templatePath('scss/_variables-bootstrap.scss'),
-        this.destinationPath(`${scssPath}/_variables-bootstrap.scss`)
+        this.destinationPath(`${scssPath}/_variables-bootstrap.scss`),
+        { options: this.props }
       );
     }
 
@@ -252,8 +263,38 @@ module.exports = class extends Generator {
       mkdirp(`${this.props.src}/fonts`);
       mkdirp(`${this.props.src}/img`);
       if (this.props.js) { mkdirp(`${this.props.src}/js`); }
+    } else if (this.props.bootstrap && !this.props.bootstrap4) {
+      // make a fonts folder
+      mkdirp('fonts');
     }
 
     this.npmInstall(this.packages, { 'save-dev': true });
+  }
+
+  end() {
+    if (this.props.bootstrap && !this.props.bootstrap4) {
+      // copy over the Bootstrap 3 font
+      if (!this.props.flatStructure) {
+        this.spawnCommandSync(
+          'cp', ['-r', 'node_modules/bootstrap-sass/assets/fonts/bootstrap', `${this.props.src}/fonts`]
+        );
+      } else {
+        this.spawnCommandSync(
+          'cp', ['-r', 'node_modules/bootstrap-sass/assets/fonts/bootstrap', 'fonts']
+        );
+      }
+    }
+
+    if (this.props.drupalbootstrap) {
+      // copy Bootstrap 3 assets to local folder for Drupal
+      // https://drupal-bootstrap.org/api/bootstrap/starterkits!sass!README.md/group/sub_theming_sass/8
+      this.spawnCommandSync(
+        'cp', ['-r', 'node_modules/bootstrap-sass/.', 'bootstrap']
+      );
+    }
+
+    this.log(
+      chalk.blue('\n\nComplete!')
+    );
   }
 };
