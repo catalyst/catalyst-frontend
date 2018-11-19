@@ -16,9 +16,9 @@ module.exports = class extends Generator {
 
   prompting() {
     this.log(
-      chalk.green('\nWelcome to the'),
-      chalk.blue('catalyst-frontend'),
-      chalk.green('build pipeline generator.\n')
+      chalk.blue('\nWelcome to the'),
+      chalk.red('catalyst-frontend'),
+      chalk.blue('build pipeline generator.\n')
     );
 
     if (!this.props.buildType) {

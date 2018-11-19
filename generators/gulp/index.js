@@ -36,10 +36,21 @@ module.exports = class extends Generator {
         'when': typeof(this.props.bootstrap) !== "boolean"
       },
       {
-        'type': 'confirm',
+        'type': 'list',
         'name': 'bootstrap4',
-        'message': `Do you want to use the Bootstrap 4 beta?`,
-        'default': true,
+        'message': `Which version of Bootstrap do you want to use?`,
+        'choices': [
+          {
+            'name': 'Bootstrap 4',
+            'short': '4',
+            'value': true
+          },
+          {
+            'name': 'Bootstrap 3',
+            'short': '3',
+            'value': false
+          }
+        ],
         'when': answers => {
           return typeof(this.props.bootstrap4) !== "boolean" && answers.bootstrap === true;
         }
