@@ -11,7 +11,7 @@ module.exports = class extends Generator {
     this.packages = [
       'autoprefixer',
       'cssnano',
-      'gulp',
+      'gulp@next',
       'gulp-postcss',
       'gulp-sass',
       'gulp-sourcemaps',
