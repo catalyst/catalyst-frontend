@@ -81,10 +81,10 @@ gulp.task('js', function() {
 });
 <% } -%>
 
-gulp.task('build', [<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>]);
+gulp.task('build', gulp.parallel(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
 
 gulp.task('watch', () => {
-  gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, ['build']);
+  gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, gulp.series('build'));
 });
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', gulp.series('build', 'watch'));
