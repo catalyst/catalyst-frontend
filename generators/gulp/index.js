@@ -191,6 +191,8 @@ module.exports = class extends Generator {
 
     if (this.props.bootstrap4 && this.props.tooltips) {
       this.packages.push('popper.js');
+    } else if (this.props.tooltips) {
+      this.packages.push('tether');
     }
   }
 
