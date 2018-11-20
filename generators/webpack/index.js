@@ -21,10 +21,8 @@ module.exports = class extends Generator {
       'file-loader',
       'html-webpack-plugin',
       'node-sass',
-      'npm-check-updates',
       'postcss-flexbugs-fixes',
       'postcss-loader',
-      'retire',
       'sass-loader',
       'style-loader',
       'url-loader',
@@ -167,12 +165,6 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('.retireignore.json'),
-      this.destinationPath('.retireignore.json'),
-      { options: this.props }
-    );
-
-    this.fs.copyTpl(
       this.templatePath('.eslintrc.json'),
       this.destinationPath('.eslintrc.json'),
       { options: this.props }
@@ -255,7 +247,8 @@ module.exports = class extends Generator {
 
   end() {
     this.log(
-      chalk.blue('\n\nComplete!')
+      chalk.blue('\n\nComplete!'),
+      chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.')
     );
   }
 };
