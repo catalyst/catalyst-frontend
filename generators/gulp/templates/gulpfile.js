@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const gulpif = require('gulp-if');
 const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
@@ -10,6 +11,7 @@ const concatjs = require('gulp-concat');
 const uglifyjs = require('gulp-uglify');
 <% } -%>
 
+let buildFlag = false; // used to determine if minification needed
 <% if (options.flatStructure) { -%>
 const PATHS = {
   'src': {
@@ -51,15 +53,25 @@ gulp.task('scss', () => {
       .on('error', sass.logError)
     )
     .pipe(sourcemaps.init())
-    .pipe(postcss([
-      autoprefixer({
-        browsers: ['last 2 versions'],
-        cascade: false,
-        remove: false
-      }),
-      flexfixes(),
-      cssnano()
-    ]))
+    .pipe(gulpif(buildFlag,
+      postcss([ // building, run minification
+        autoprefixer({
+          browsers: ['last 2 versions'],
+          cascade: false,
+          remove: false
+        }),
+        flexfixes(),
+        cssnano()
+      ]),
+      postcss([ // not building, don't run minification
+        autoprefixer({
+          browsers: ['last 2 versions'],
+          cascade: false,
+          remove: false
+        }),
+        flexfixes()
+      ])
+    ))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.dist.css));
 });
@@ -75,16 +87,22 @@ gulp.task('js', function() {
     ])
     .pipe(sourcemaps.init())
     .pipe(concatjs('bundle.js'))
-    .pipe(uglifyjs({ mangle: false }))
+    .pipe(gulpif(buildFlag, uglifyjs({ mangle: false })))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.dist.js));
 });
 <% } -%>
 
-gulp.task('build', gulp.parallel(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
-
-gulp.task('watch', () => {
-  gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, gulp.series('build'));
+gulp.task('set-build-flag', function(done) {
+  // only set when gulp is called via `build` command
+  buildFlag = true;
+  done();
 });
 
-gulp.task('default', gulp.series('build', 'watch'));
+gulp.task('build', gulp.series('set-build-flag', <% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
+
+gulp.task('watch', () => {
+  gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, gulp.parallel(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
+});
+
+gulp.task('default', gulp.series(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>, 'watch'));
