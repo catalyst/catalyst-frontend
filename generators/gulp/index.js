@@ -16,8 +16,7 @@ module.exports = class extends Generator {
       'gulp-postcss',
       'gulp-sass',
       'gulp-sourcemaps',
-      'postcss-flexbugs-fixes',
-      'npm-check-updates'
+      'postcss-flexbugs-fixes'
     ];
 
     this.props = this.options.reconfigure ? {} : this.config.getAll();
@@ -177,7 +176,6 @@ module.exports = class extends Generator {
     if (this.props.js) {
       this.packages.push('gulp-uglify');
       this.packages.push('gulp-concat');
-      this.packages.push('retire');
     }
 
     if (this.props.jquery) {
@@ -203,7 +201,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      { options: this.props, name: this.options.name }
+      { name: this.options.name }
     );
 
     this.fs.copyTpl(
@@ -249,14 +247,6 @@ module.exports = class extends Generator {
       );
     }
 
-    if (this.props.bootstrap || this.props.js) {
-      this.fs.copyTpl(
-        this.templatePath('.retireignore.json'),
-        this.destinationPath('.retireignore.json'),
-        { options: this.props }
-      );
-    }
-
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 
@@ -297,7 +287,8 @@ module.exports = class extends Generator {
     }
 
     this.log(
-      chalk.blue('\n\nComplete!')
+      chalk.blue('\n\nComplete!'),
+      chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.')
     );
   }
 };

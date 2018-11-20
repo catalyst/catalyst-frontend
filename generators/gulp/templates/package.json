@@ -6,9 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/gulp build",
-    "start": "./node_modules/.bin/gulp",
-    "deps:check": "./node_modules/.bin/npm-check-updates<% if (options.js) { %> && ./node_modules/.bin/retire<% } %>",
-    "deps:update": "./node_modules/.bin/npm-check-updates -u && ./node_modules/.bin/npm-check-updates -a && npm install<% if (options.js) { %> && ./node_modules/.bin/retire<% } %>"
+    "start": "./node_modules/.bin/gulp"
   },
   "license": "UNLICENSED",
   "private": true,
