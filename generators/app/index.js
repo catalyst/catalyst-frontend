@@ -80,7 +80,7 @@ module.exports = class extends Generator {
   }
 
   default() {
-    if (this.props.newFolder) {
+    if (this.props.newFolder && !this.props.ignoreNewFolderSettings) {
       mkdirp(this.props.name);
       this.destinationRoot(this.destinationPath(this.props.name));
     }
@@ -105,7 +105,10 @@ module.exports = class extends Generator {
       this.destinationPath('.editorconfig')
     );
 
-    this.config.save();
+    this.props.ignoreNewFolderSettings = true; // add this to the saved config
+    // so reruns do not cause nested project subfolders
+
+    this.config.save(); // .set() also calls .save() automatically
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 };
