@@ -27,9 +27,16 @@ From this directory:
 npm start
 ```
 
+<% if (options.browsersync) { -%>
+This will start Browsersync, which will watch for changes in your files and
+reload your browser for you automatically, and Gulp, which will recompile your
+files for you. `control-c` will quit the watch process. You may want to further
+customise which files Browsersync watches by editing the BROWSERSYNCOPTS object
+in `gulpfile.js`.
+<% } else { -%>
 This will run a watch process that keeps an eye on your files and recompiles
 whenever you save changes. `control-c` will quit the watch process.
-
+<% } %>
 ## Project structure & build process features
 
 ```
@@ -57,17 +64,18 @@ editor, see [the EditorConfig website](http://editorconfig.org/).
 All `.scss` files in the <% if (options.flatStructure) { %>`<%= options.src %>/`<% }
 else { %>`<%= options.src %>/scss/`<% } %> folder will be compiled. Use the
 [underscore import functionality](http://sass-lang.com/guide#topic-5) to create
-includes of module files so you don't end up with more than one `.css` file in <% if (options.flatStructure) { %>`<%= options.dist %>/`<% }
+includes of module files so you don't end up with more than one `.css` file
+in <% if (options.flatStructure) { %>`<%= options.dist %>/`<% }
 else { %>`<%= options.dist %>/css/`<% } %>.
 
 [Autoprefixer](https://github.com/postcss/autoprefixer#autoprefixer-) (so you
 don't need to write vendor prefixes) and CSS minification is included in the
-compile process.
+compile process, when you run `npm run build`.
 
 <% if (options.bootstrap) { %>[Bootstrap](http://getbootstrap.com/) is included,
 as well as a file for you to put in your overrides of its variables, at <% if
 (options.flatStructure) { %>`<%= options.src %>/_variables-bootstrap.scss`<% }
-else { %>`<%= options.src %>/scss/_variables-bootstrap.scss`<% } %><% } -%>.
+else { %>`<%= options.src %>/scss/_variables-bootstrap.scss`<% } %>.<% } -%>
 
 <% if (options.js) { -%>
 ### JS concatenation and minification

@@ -1,4 +1,5 @@
-const gulp = require('gulp');
+<% if (options.browsersync) { %>const browsersync = require('browser-sync').create();
+<% } -%>const gulp = require('gulp');
 const gulpif = require('gulp-if');
 const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
@@ -11,7 +12,6 @@ const concatjs = require('gulp-concat');
 const uglifyjs = require('gulp-uglify');
 <% } -%>
 
-let buildFlag = false; // used to determine if minification needed
 <% if (options.flatStructure) { -%>
 const PATHS = {
   'src': {
@@ -33,8 +33,19 @@ const PATHS = {
     'js': './<%= options.dist %>/js/',<% } %>
     'css': './<%= options.dist %>/css/'
   }
+}<% } -%><% if (options.browsersync) { %>const BROWSERSYNCOPTS = {
+  <% if (options.browsersyncproxy) { %>proxy: '<%= options.browsersyncproxyaddress %>',<% } else { %>server: { baseDir: './' },
+  <% } -%>files: [
+    '**/*.html',
+    '**/*.js',
+    // you can add other paths to watch for reloads here,
+    // e.g. 'templates/**/*.twig' or 'templates/**/*.ss' or '**/*.php'
+  ]
 }
+<% } -%>
+let buildFlag = false; // used to determine if minification needed
 
+<% if (!options.flatStructure) { -%>
 gulp.task('copy-files', () => {
   return gulp.src([PATHS.src.root, '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js<% } %>])
     .pipe(gulp.dest(PATHS.dist.root));
@@ -73,7 +84,8 @@ gulp.task('scss', () => {
       ])
     ))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(PATHS.dist.css));
+    .pipe(gulp.dest(PATHS.dist.css))<% if (options.browsersync) { %>
+    .pipe(browsersync.stream({match: '**/*.css'}))<% } %>;
 });
 
 <% if (options.js) { -%>
@@ -102,6 +114,7 @@ gulp.task('set-build-flag', function(done) {
 gulp.task('build', gulp.series('set-build-flag', <% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
 
 gulp.task('watch', () => {
+  <% if (options.browsersync) { %>browsersync.init(BROWSERSYNCOPTS);<% } %>
   gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, gulp.parallel(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
 });
 

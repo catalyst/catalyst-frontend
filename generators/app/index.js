@@ -87,16 +87,18 @@ module.exports = class extends Generator {
 
     if (this.props.buildType === 'gulp') {
       this.composeWith(require.resolve('../gulp'),  {
-        'reconfigure': this.options.reconfigure,
-        'name': this.props.name
+        'reconfigure': this.options.reconfigure
       });
     } else {
       // it's Webpack
       this.composeWith(require.resolve('../webpack'),  {
-        'reconfigure': this.options.reconfigure,
-        'name': this.props.name
+        'reconfigure': this.options.reconfigure
       });
     }
+
+    this.composeWith(require.resolve('../cleanup'),  {
+      'props': this.props
+    });
   }
 
   writing() {
@@ -105,10 +107,6 @@ module.exports = class extends Generator {
       this.destinationPath('.editorconfig')
     );
 
-    this.props.ignoreNewFolderSettings = true; // add this to the saved config
-    // so reruns do not cause nested project subfolders
-
-    this.config.save(); // .set() also calls .save() automatically
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 };
