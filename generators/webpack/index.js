@@ -244,11 +244,4 @@ module.exports = class extends Generator {
 
     this.npmInstall(this.packages, { 'save-dev': true });
   }
-
-  end() {
-    this.log(
-      chalk.blue('\n\nComplete!'),
-      chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.')
-    );
-  }
 };

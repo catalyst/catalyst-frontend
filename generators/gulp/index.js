@@ -31,6 +31,42 @@ module.exports = class extends Generator {
     const prompts = [
       {
         'type': 'confirm',
+        'name': 'browsersync',
+        'message': `Do you want to use Browsersync (auto page reloading server/proxy)?`,
+        'default': true,
+        'when': typeof(this.props.browsersync) !== "boolean"
+      },
+      {
+        'type': 'list',
+        'name': 'browsersyncproxy',
+        'message': 'Do you need Browsersync to proxy your existing dev env?',
+        'choices': [
+          {
+            'name': 'Yes, proxy to my existing environment',
+            'short': 'Use Browsersync as a proxy',
+            'value': true
+          },
+          {
+            'name': 'No, just serve my project directly',
+            'short': 'Use Browsersync to serve my files',
+            'value': false
+          }
+        ],
+        'when': answers => {
+          return typeof(this.props.browsersyncproxy) !== "boolean" && (answers.browsersync === true || this.props.browsersync === true);
+        }
+      },
+      {
+        'type': 'input',
+        'name': 'browsersyncproxyaddress',
+        'message': 'What is the address of your local dev env to proxy?',
+        'default': 'http://localhost:8080',
+        'when': answers => {
+          return !this.props.browsersyncproxyaddress && (answers.browsersyncproxy === true || this.props.browsersyncproxy === true);
+        }
+      },
+      {
+        'type': 'confirm',
         'name': 'bootstrap',
         'message': `Do you want to add Bootstrap to your project?`,
         'default': false,
@@ -173,6 +209,10 @@ module.exports = class extends Generator {
   }
 
   configuring() {
+    if (this.props.browsersync) {
+      this.packages.push('browser-sync');
+    }
+
     if (this.props.js) {
       this.packages.push('gulp-uglify');
       this.packages.push('gulp-concat');
@@ -285,10 +325,5 @@ module.exports = class extends Generator {
         'cp', ['-r', 'node_modules/bootstrap-sass/.', 'bootstrap']
       );
     }
-
-    this.log(
-      chalk.blue('\n\nComplete!'),
-      chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.')
-    );
   }
 };
