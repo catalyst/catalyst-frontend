@@ -87,11 +87,13 @@ module.exports = class extends Generator {
 
     if (this.props.buildType === 'gulp') {
       this.composeWith(require.resolve('../gulp'),  {
+        'name': this.props.name, // used in package.json template
         'reconfigure': this.options.reconfigure
       });
     } else {
       // it's Webpack
       this.composeWith(require.resolve('../webpack'),  {
+        'name': this.props.name, // used in package.json template
         'reconfigure': this.options.reconfigure
       });
     }
