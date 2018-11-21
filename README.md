@@ -21,11 +21,10 @@ For simple projects where you are not intending to utilise ES6.
   - CSS sourcemaps
 * A basic [.editorconfig](http://editorconfig.org/)
 * Choice of project structures
-* Tooling for checking project dependencies for [new releases](https://github.com/tjunnone/npm-check-updates)
-* Tooling for checking project dependencies for [security issues](https://retirejs.github.io/retire.js/)
 
 #### Optional functionality:
 
+* [Browsersync](https://browsersync.io/) integration for auto-reloading
 * JS file concatenation and minification
   - JS sourcemaps
 * [Bootstrap](http://getbootstrap.com/) CSS - choice of Boostrap 3 or 4
@@ -49,8 +48,6 @@ For projects where you want to use ES6 transpilation.
   - production build command
 * A basic [.editorconfig](http://editorconfig.org/)
 * Linting with [eslint](https://eslint.org/)
-* Tooling for checking project dependencies for [new releases](https://github.com/tjunnone/npm-check-updates)
-* Tooling for checking project dependencies for [security issues](https://retirejs.github.io/retire.js/)
 
 #### Optional functionality:
 
@@ -96,11 +93,10 @@ catalyst-frontend --reconfigure
 
 ## TODO
 
-* Avoid JS minification on dev builds in Gulp pipeline
-* Integrate BrowserSync into Gulp pipeline
+* Update the Webpack build process
 * Ask for project setup parameters e.g. tabs vs whitespaces
 * Add React hot module loader
 
 ## License
 
-GPL-3.0 © [Jen Zajac](https://github.com/jenofdoom)
+GPL-3.0 © [Catalyst](https://catalyst.net.nz/)
