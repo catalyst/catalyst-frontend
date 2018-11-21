@@ -4,13 +4,14 @@
 ## Available functionality
 
 This opinionated tool (as used at [Catalyst](http://catalyst.net.nz/)) aims to
-get you up and running with one of two configurable frontend build pipelines. It
+get you up and running with **one of two configurable frontend build pipelines** 
+([Gulp](https://gulpjs.com/) or [Webpack](https://webpack.js.org/)). It
 generates documentation to get you started and gives you the config files so you
 can tweak them further yourself if you like.
 
 ### Gulp pipeline
 
-For simple projects where you are not intending to utilise ES6.
+For simple projects where you are not intending to utilise ES2015.
 
 #### Basic functionality:
 
@@ -26,9 +27,9 @@ For simple projects where you are not intending to utilise ES6.
 
 * [Browsersync](https://browsersync.io/) integration for auto-reloading
 * JS file concatenation and minification
-  - JS sourcemaps
-* [Bootstrap](http://getbootstrap.com/) CSS - choice of Boostrap 3 or 4
+  - sourcemaps
 * [jQuery](https://jquery.com/)
+* [Bootstrap](http://getbootstrap.com/) CSS - choice of Boostrap 3 or 4
 * [Bootstrap](http://getbootstrap.com/) JS
 
 ### Webpack pipeline
