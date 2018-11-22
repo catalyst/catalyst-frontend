@@ -9,12 +9,14 @@ module.exports = class extends Generator {
     super(args, opts)
 
     this.packages = [
+      '@babel/core',
+      '@babel/polyfill',
+      '@babel/preset-env',
+      '@babel/plugin-proposal-object-rest-spread',
       'autoprefixer',
-      'babel-core',
       'babel-loader',
-      'babel-polyfill',
-      'babel-preset-env',
       'css-loader',
+      'es6-promise',
       'eslint',
       'eslint-loader',
       'extract-text-webpack-plugin',
@@ -29,7 +31,8 @@ module.exports = class extends Generator {
       'webpack',
       'webpack-cli',
       'webpack-dev-server',
-      'webpack-merge'
+      'webpack-merge',
+      'whatwg-fetch'
     ];
 
     this.props = this.options.reconfigure ? {} : this.config.getAll();
@@ -102,22 +105,22 @@ module.exports = class extends Generator {
 
   configuring() {
     if (this.props.react) {
-      this.packages.push('babel-preset-react');
+      this.packages.push('@babel/preset-react');
       this.packages.push('prop-types');
       this.packages.push('react');
       this.packages.push('react-dom');
+      this.packages.push('react-hot-loader');
       this.packages.push('eslint-plugin-react');
     }
 
     if (this.props.jest) {
       this.packages.push('jest');
-      this.packages.push('enzyme');
       this.packages.push('babel-jest');
-      this.packages.push('react-addons-test-utils');
-      this.packages.push('react-test-renderer');
     }
 
     if (this.props.jest && this.props.react) {
+      this.packages.push('enzyme');
+      this.packages.push('enzyme-adapter-react-16');
       this.packages.push('react-addons-test-utils');
       this.packages.push('react-test-renderer');
     }
@@ -173,14 +176,12 @@ module.exports = class extends Generator {
     if (this.props.jest) {
       this.fs.copyTpl(
         this.templatePath('jest-mock-files.js'),
-        this.destinationPath('jest-mock-files.js'),
-        { options: this.props }
+        this.destinationPath('jest-mock-files.js')
       );
 
       this.fs.copyTpl(
         this.templatePath('jest-mock-styles.js'),
-        this.destinationPath('jest-mock-styles.js'),
-        { options: this.props }
+        this.destinationPath('jest-mock-styles.js')
       );
     }
 
@@ -190,11 +191,23 @@ module.exports = class extends Generator {
         this.destinationPath(this.props.src + '/index.jsx'),
         { options: this.props }
       );
+
+      this.fs.copyTpl(
+        this.templatePath('src/app.jsx'),
+        this.destinationPath(this.props.src + '/app.jsx')
+      );
     } else {
       this.fs.copyTpl(
         this.templatePath('src/index.js'),
         this.destinationPath(this.props.src + '/index.js'),
         { options: this.props }
+      );
+    }
+
+    if (this.props.react && this.props.jest) {
+      this.fs.copyTpl(
+        this.templatePath('jest-setup.js'),
+        this.destinationPath('jest-setup.js')
       );
     }
 

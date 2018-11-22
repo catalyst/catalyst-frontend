@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const flexfixes = require('postcss-flexbugs-fixes');
@@ -10,10 +11,11 @@ let config = {};
 
 // config that is shared between all types of build (dev and prod)
 const common = {
-  entry: ['babel-polyfill', './<%= options.src %>/index.js<% if (options.react) { %>x<% } %>'],
+  entry: ['@babel/polyfill', 'whatwg-fetch', './<%= options.src %>/index.js<% if (options.react) { %>x<% } %>'],
 
   output: {
     path: path.resolve(__dirname, '<%= options.dist %>'),
+    publicPath: '/',
     filename: 'bundle.js'
   },
 
@@ -33,7 +35,11 @@ const common = {
       {
         test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: /node_modules/,
-        loader: 'url-loader?limit=10000' // will insert a data URI if filesize < 10kb otherwise uses file-loader
+        loader: 'url-loader',
+        options: {
+          limit: 1024, // will insert a data URI if filesize < 1kb otherwise uses file-loader
+          fallback: 'file-loader'
+        }
       }
     ]
   },
@@ -42,6 +48,12 @@ const common = {
     new HtmlWebpackPlugin({
       template: './<%= options.src %>/index.html',
       hash: true
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {NODE_ENV: JSON.stringify(env)}
+    }),
+    new webpack.ProvidePlugin({
+      Promise: ['es6-promise', 'Promise']
     })
   ],
 
@@ -59,6 +71,8 @@ switch (env) {
 
       devServer: {
         historyApiFallback: true // enables reloads of routed pages
+        // if you need to proxy a backend server this is the place to do it:
+        // see https://webpack.js.org/configuration/dev-server/#devserver-proxy
       },
 
       // because we need to use ExtractTextPlugin for prod, we have to specify the 'dev' scss test here
@@ -96,7 +110,7 @@ switch (env) {
     // most of the prod specific config is provided directly by webpack as we supplied the -p flag
     // but we want to only use ExtractTextPlugin for prod, not dev
     config = merge(common, {
-      devtool: 'cheap-module-source-map',
+      devtool: 'source-map',
 
       module: {
         rules: [
@@ -135,6 +149,6 @@ switch (env) {
     break;
   default:
     config = common;
-  }
+}
 
 module.exports = config;

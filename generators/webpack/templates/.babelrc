@@ -1,14 +1,28 @@
 {
   "presets": [
-    "react",
     [
-      "env",
+      "@babel/preset-env",
       {
+        "forceAllTransforms": true,
         "targets": {
-          "uglify": true
+          "browsers": [
+            "last 2 versions",
+            "edge >= 38",
+            "safari >= 9",
+            "ie >= 11",
+            "chrome >= 60",
+            "firefox >= 51"
+          ]
         },
         "modules": false
       }
-    ]
-  ]
+    ]<% if (options.react) { %>,
+    "@babel/preset-react"<% } %>
+  ],
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"<% if (options.react) { %> , "react-hot-loader/babel"<% } %>],
+  "env": {
+    "test": {
+      "plugins": ["transform-es2015-modules-commonjs"]
+    }
+  }
 }
