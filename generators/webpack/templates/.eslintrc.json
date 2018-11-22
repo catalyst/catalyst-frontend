@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true<% if (options.jest) { %>,
+    "jest": true<% } %>
   }<% if (options.react) { %>,
   "plugins": [
     "react"
@@ -11,11 +12,14 @@
     "plugin:react/recommended"<% } %>
   ],
   "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true<% if (options.react) { %>,
-      "jsx": true<% } %>
-    },
+    "ecmaVersion": 2018,<% if (options.react) { %>"ecmaFeatures": {
+      "jsx": true
+    },<% } %>
     "sourceType": "module"
+  },
+  "globals": {
+    "fetch": true,
+    "module": true
   },
   "rules": {
     "indent": [
@@ -28,13 +32,15 @@
     ],
     "quotes": [
       "warn",
-      "single"
+      "single",
+      { "allowTemplateLiterals": true }
     ],
     "semi": [
       "warn",
       "never"
     ],
     "no-console": ["warn"],
-    "no-unused-vars": ["warn"]
+    "no-unused-vars": ["warn"],
+    "max-len": ["warn", { "code": 120 , "ignoreComments": true }]
   }
 }

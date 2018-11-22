@@ -38,7 +38,7 @@ For projects where you want to use ES6 transpilation.
 
 #### Basic functionality:
 
-* ES6 transpilation with [Babel](https://babeljs.io/)
+* ES2015 transpilation with [Babel](https://babeljs.io/) (plus plugin-proposal-object-rest-spread)
 * [SASS](http://sass-lang.com/) (.scss) support
   - [Autoprefixer](https://github.com/postcss/autoprefixer#autoprefixer-)
   - CSS minification with [cssnano](http://cssnano.co/)
@@ -49,10 +49,11 @@ For projects where you want to use ES6 transpilation.
   - production build command
 * A basic [.editorconfig](http://editorconfig.org/)
 * Linting with [eslint](https://eslint.org/)
+* [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill), [whatwg-fetch](https://github.com/whatwg/fetch) and [es6-promise](https://www.npmjs.com/package/es6-promise) support for older browsers
 
 #### Optional functionality:
 
-* [React](https://facebook.github.io/react/)
+* [React](https://facebook.github.io/react/) and hot loading
 * [Jest](https://facebook.github.io/jest/) for testing
 * [Bootstrap 4](http://getbootstrap.com/)
 
@@ -94,9 +95,8 @@ catalyst-frontend --reconfigure
 
 ## TODO
 
-* Update the Webpack build process
-* Ask for project setup parameters e.g. tabs vs whitespaces
-* Add React hot module loader
+* Ask for project setup parameters e.g. tabs vs whitespaces, semicolons or not
+* Webpack TypeScript option
 
 ## License
 
