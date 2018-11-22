@@ -11,7 +11,7 @@ module.exports = class extends Generator {
 
   end() {
     this.log(
-      chalk.green('Complete!')
+      chalk.green('\nComplete!')
     );
 
     if (this.props.newFolder && !this.props.ignoreNewFolderSettings) {
@@ -28,11 +28,11 @@ module.exports = class extends Generator {
 
     this.log(
       chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.'),
-      chalk.red('\n\nRun'),
-      chalk.white('npm start'),
-      chalk.red('to start developing, or read'),
-      chalk.white('README.md'),
-      chalk.red('for more details.')
+      chalk.white('\n\nRun'),
+      chalk.blue('npm start'),
+      chalk.white('to start developing, or read'),
+      chalk.blue('README.md'),
+      chalk.white('for more details.')
     );
   }
 };
