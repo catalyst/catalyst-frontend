@@ -1,6 +1,8 @@
 # catalyst-frontend
 > A configurable frontend build pipeline that caters for everything from simple SASS compilation only, right through to ES2015 plus React.
 
+![catalyst-frontend preview](https://raw.githubusercontent.com/catalyst/catalyst-frontend/master/catalyst-frontend.gif)
+
 ## Available functionality
 
 This opinionated tool (as used at [Catalyst](http://catalyst.net.nz/)) aims to
