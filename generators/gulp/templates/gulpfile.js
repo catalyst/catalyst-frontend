@@ -35,7 +35,7 @@ const PATHS = {
   }
 }<% } %>
 <% if (options.browsersync) { %>const BROWSERSYNCOPTS = {
-  <% if (options.browsersyncproxy) { %>proxy: '<%= options.browsersyncproxyaddress %>',<% } else { %>server: { baseDir: './' },
+  <% if (options.browsersyncproxy) { %>proxy: '<%= options.browsersyncproxyaddress %>',<% } else { %>server: { baseDir: './<% if (!options.flatStructure) { %><%= options.dist %>/<% } %>' },
   <% } -%>files: [
     '**/*.html',
     '**/*.js',

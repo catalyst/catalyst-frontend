@@ -31,6 +31,13 @@ module.exports = class extends Generator {
     const prompts = [
       {
         'type': 'confirm',
+        'name': 'index',
+        'message': `Do you want an index.html file created?`,
+        'default': false,
+        'when': typeof(this.props.index) !== "boolean"
+      },
+      {
+        'type': 'confirm',
         'name': 'browsersync',
         'message': `Do you want to use Browsersync (auto page reloading server/proxy)?`,
         'default': true,
@@ -237,6 +244,7 @@ module.exports = class extends Generator {
 
   writing() {
     let scssPath = this.props.flatStructure ? `${this.props.src}` : `${this.props.src}/scss`;
+    let distOrRootPath = this.props.flatStructure ? '' : `${this.props.dist}/`;
 
     this.fs.copyTpl(
       this.templatePath('package.json'),
@@ -266,6 +274,15 @@ module.exports = class extends Generator {
       this.templatePath('example.gitignore'),
       this.destinationPath('.gitignore'),
       { options: this.props }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('index.html'),
+      this.destinationPath(`${distOrRootPath}index.html`),
+      {
+        name: this.options.name,
+        options: this.props
+      }
     );
 
     this.fs.copyTpl(
