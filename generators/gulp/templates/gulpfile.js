@@ -7,8 +7,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('autoprefixer');
 const flexfixes = require('postcss-flexbugs-fixes');
 const cssnano = require('cssnano');
-<% if (options.js) { %>
-const concatjs = require('gulp-concat');
+<% if (options.js) { %>const concatjs = require('gulp-concat');
 const uglifyjs = require('gulp-uglify');
 <% } -%>
 
