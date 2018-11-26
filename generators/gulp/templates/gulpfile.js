@@ -48,7 +48,7 @@ let buildFlag = false; // used to determine if minification needed
 
 <% if (!options.flatStructure) { -%>
 gulp.task('copy-files', () => {
-  return gulp.src([PATHS.src.root, '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js<% } %>])
+  return gulp.src([PATHS.src.root, '!./<%= options.src %>/scss', '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js<% } %>])
     .pipe(gulp.dest(PATHS.dist.root));
 });
 <% } -%>
