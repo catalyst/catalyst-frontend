@@ -12,7 +12,8 @@
     "plugin:react/recommended"<% } %>
   ],
   "parserOptions": {
-    "ecmaVersion": 2018,<% if (options.react) { %>"ecmaFeatures": {
+    "ecmaVersion": 2018,<% if (options.react) { %>
+    "ecmaFeatures": {
       "jsx": true
     },<% } %>
     "sourceType": "module"

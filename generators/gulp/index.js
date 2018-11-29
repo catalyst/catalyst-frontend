@@ -277,6 +277,12 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
+      this.templatePath('example.gitattributes'),
+      this.destinationPath('.gitattributes'),
+      { options: this.props }
+    );
+
+    this.fs.copyTpl(
       this.templatePath('index.html'),
       this.destinationPath(`${distOrRootPath}index.html`),
       {

@@ -116,6 +116,8 @@ module.exports = class extends Generator {
     if (this.props.jest) {
       this.packages.push('jest');
       this.packages.push('babel-jest');
+      this.packages.push('@babel/plugin-transform-modules-commonjs');
+      this.packages.push('babel-core@7.0.0-bridge.0');
     }
 
     if (this.props.jest && this.props.react) {
@@ -164,6 +166,12 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('example.gitignore'),
       this.destinationPath('.gitignore'),
+      { options: this.props }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('example.gitattributes'),
+      this.destinationPath('.gitattributes'),
       { options: this.props }
     );
 
