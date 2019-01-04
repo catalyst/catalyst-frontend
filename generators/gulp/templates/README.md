@@ -98,6 +98,16 @@ you can create any other subfolders as you please (or just put files in the root
 of `<%= options.src %>`).
 <% } -%>
 
+### JavaScript linting
+
+Use `npm run lint` to run the linter. The configuration file for the linter is
+at `.eslintrc.json`, where you can tweak you configuration as you please - refer
+to the [eslint documentation](https://eslint.org/docs/user-guide/configuring).
+By default the [Airbnb JavaScript style
+guide](https://github.com/airbnb/javascript) is used (with a few tweaks). You
+can also run `npm run lint:fix` to fix any automatically fixable errors
+directly.
+
 ## Deploying
 
 To generate the compiled static files, from this directory run:
