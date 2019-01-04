@@ -10,7 +10,6 @@ module.exports = class extends Generator {
 
     this.packages = [
       '@babel/core',
-      '@babel/polyfill',
       '@babel/preset-env',
       '@babel/plugin-proposal-object-rest-spread',
       'autoprefixer',
@@ -18,7 +17,11 @@ module.exports = class extends Generator {
       'css-loader',
       'es6-promise',
       'eslint',
+      'eslint-config-airbnb',
       'eslint-loader',
+      'eslint-plugin-import',
+      'eslint-plugin-react',
+      'eslint-plugin-jsx-a11y',
       'extract-text-webpack-plugin',
       'file-loader',
       'html-webpack-plugin',
@@ -31,7 +34,10 @@ module.exports = class extends Generator {
       'webpack',
       'webpack-cli',
       'webpack-dev-server',
-      'webpack-merge',
+      'webpack-merge'
+    ];
+    this.projectPackages = [
+      '@babel/polyfill',
       'whatwg-fetch'
     ];
 
@@ -106,11 +112,10 @@ module.exports = class extends Generator {
   configuring() {
     if (this.props.react) {
       this.packages.push('@babel/preset-react');
-      this.packages.push('prop-types');
-      this.packages.push('react');
-      this.packages.push('react-dom');
+      this.projectPackages.push('prop-types');
+      this.projectPackages.push('react');
+      this.projectPackages.push('react-dom');
       this.packages.push('react-hot-loader');
-      this.packages.push('eslint-plugin-react');
     }
 
     if (this.props.jest) {
@@ -128,7 +133,7 @@ module.exports = class extends Generator {
     }
 
     if (this.props.bootstrap) {
-      this.packages.push('bootstrap');
+      this.projectPackages.push('bootstrap');
     }
   }
 
@@ -264,5 +269,6 @@ module.exports = class extends Generator {
     if (this.props.react) { mkdirp(`${this.props.src}/components`) };
 
     this.npmInstall(this.packages, { 'save-dev': true });
+    this.npmInstall(this.projectPackages, { 'save-dev': false });
   }
 };

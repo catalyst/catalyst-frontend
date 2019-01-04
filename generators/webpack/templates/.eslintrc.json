@@ -3,13 +3,16 @@
     "browser": true,
     "es6": true<% if (options.jest) { %>,
     "jest": true<% } %>
-  }<% if (options.react) { %>,
-  "plugins": [
-    "react"
-  ]<% } %>,
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
   "extends": [
-    "eslint:recommended"<% if (options.react) { %>,
-    "plugin:react/recommended"<% } %>
+    "airbnb"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,<% if (options.react) { %>
@@ -20,28 +23,34 @@
   },
   "globals": {
     "fetch": true,
-    "module": true
+    "module": true,
+    "process": true
   },
   "rules": {
-    "indent": [
-      "warn",
-      2
-    ],
-    "linebreak-style": [
-      "warn",
-      "unix"
-    ],
-    "quotes": [
-      "warn",
-      "single",
-      { "allowTemplateLiterals": true }
-    ],
-    "semi": [
-      "warn",
-      "never"
-    ],
-    "no-console": ["warn"],
-    "no-unused-vars": ["warn"],
-    "max-len": ["warn", { "code": 120 , "ignoreComments": true }]
-  }
+    "comma-dangle": ["warn", {
+      "arrays": "only-multiline",
+      "objects": "only-multiline",
+      "imports": "only-multiline",
+      "exports": "only-multiline",
+      "functions": "ignore"
+    }],
+    "import/no-named-as-default": 0,
+    "max-len": ["warn", { "code": 100 , "ignoreComments": true }],
+    "quotes": ["warn", "single", { "allowTemplateLiterals": true }]<% if (options.react) { %>,
+    "react/jsx-no-bind": ["error", {
+      "ignoreDOMComponents": false,
+      "ignoreRefs": false,
+      "allowArrowFunctions": true,
+      "allowFunctions": false,
+      "allowBind": false
+    }]<% } %>
+  }<% if (options.react && options.jest) { %>,
+  "overrides": [
+    {
+      "files": [ "**/*.test.js" ],
+      "rules": {
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+      }
+    }
+  ]<% } %>
 }

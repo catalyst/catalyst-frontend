@@ -9,11 +9,12 @@
     "test": "./node_modules/.bin/jest",
     "test:watch": "./node_modules/.bin/jest --watch",
     "test:coverage": "./node_modules/.bin/jest --coverage"<% } %>,
-    "lint": "./node_modules/.bin/eslint <%= options.src %>",
-    "lint:fix": "./node_modules/.bin/eslint <%= options.src %> --fix"
+    "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\"",
+    "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\" --fix"
   },
   "license": "UNLICENSED",
   "private": true,
+  "dependencies": {},
   "devDependencies": {}<% if (options.jest) { %>,
   "jest": {
     "verbose": true,

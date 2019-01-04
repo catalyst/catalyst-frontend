@@ -1,9 +1,9 @@
-<% if (options.react) { %>import React from 'react'
-import { render } from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
-import App from 'app'
+<% if (options.react) { %>import React from 'react';
+import { render } from 'react-dom';
+import { AppContainer } from 'react-hot-loader'; // eslint-disable-line import/no-extraneous-dependencies
+import App from 'app';
 
-<% } %>import 'index.scss'<% if (options.react) { %>
+<% } %>import 'index.scss';<% if (options.react) { %>
 
 const renderComponent = (Component) => {
   render(
@@ -11,14 +11,15 @@ const renderComponent = (Component) => {
       <Component />
     </AppContainer>,
     document.getElementById('app')
-  )
-}
+  );
+};
 
-renderComponent(App)
+renderComponent(App);
 
 // Webpack Hot Module Replacement API
-if (module.hot) {
+if (module.hot) { // only ever in dev
   module.hot.accept('./app', () => {
-    renderComponent(require('./app').default)
-  })
+    // eslint-disable-next-line global-require
+    renderComponent(require('./app').default);
+  });
 }<% } %>

@@ -6,9 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/gulp build",
-    "start": "./node_modules/.bin/gulp"
+    "start": "./node_modules/.bin/gulp",
+    "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.js\"",
+    "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.js\" --fix"
   },
   "license": "UNLICENSED",
   "private": true,
+  "dependencies": {},
   "devDependencies": {}
 }
