@@ -10,6 +10,10 @@ module.exports = class extends Generator {
 
     this.packages = [
       'autoprefixer',
+      'babel-eslint', // unfortunately a dep of eslint-config-airbnb-es5 even if we're not using babel :/
+      'eslint',
+      'eslint-config-airbnb-es5',
+      'eslint-plugin-react', // unfortunately a dep of eslint-config-airbnb-es5 even if we're not using react :/
       'cssnano',
       'gulp@next',
       'gulp-if',
@@ -18,6 +22,7 @@ module.exports = class extends Generator {
       'gulp-sourcemaps',
       'postcss-flexbugs-fixes'
     ];
+    this.projectPackages = [];
 
     this.props = this.options.reconfigure ? {} : this.config.getAll();
 
@@ -226,19 +231,19 @@ module.exports = class extends Generator {
     }
 
     if (this.props.jquery) {
-      this.packages.push('jquery');
+      this.projectPackages.push('jquery');
     }
 
     if (this.props.bootstrap4) {
-      this.packages.push('bootstrap');
+      this.projectPackages.push('bootstrap');
     } else if (this.props.bootstrap) {
-      this.packages.push('bootstrap-sass');
+      this.projectPackages.push('bootstrap-sass');
     }
 
     if (this.props.bootstrap4 && this.props.tooltips) {
-      this.packages.push('popper.js');
+      this.projectPackages.push('popper.js');
     } else if (this.props.tooltips) {
-      this.packages.push('tether');
+      this.projectPackages.push('tether');
     }
   }
 
@@ -249,13 +254,18 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      { name: this.options.name }
+      { options: this.props, name: this.options.name }
     );
 
     this.fs.copyTpl(
       this.templatePath('.editorconfig'),
       this.destinationPath('.editorconfig'),
       { options: this.props }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('.eslintrc.json'),
+      this.destinationPath('.eslintrc.json')
     );
 
     this.fs.copyTpl(
@@ -325,6 +335,7 @@ module.exports = class extends Generator {
     }
 
     this.npmInstall(this.packages, { 'save-dev': true });
+    this.npmInstall(this.projectPackages, { 'save-dev': false });
   }
 
   end() {
