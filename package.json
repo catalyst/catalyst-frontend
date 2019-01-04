@@ -28,7 +28,6 @@
   "devDependencies": {
     "yeoman-test": "^1.9.1",
     "yeoman-assert": "^3.1.1",
-    "nsp": "^3.2.1",
     "eslint": "^5.9.0",
     "eslint-config-xo-space": "^0.20.0",
     "jest": "^23.6.0",
@@ -47,7 +46,6 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "prepare": "nsp check",
     "pretest": "eslint . --fix",
     "test": "jest"
   },
