@@ -4,6 +4,7 @@ const autoprefixer = require('autoprefixer');
 const flexfixes = require('postcss-flexbugs-fixes');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const merge = require('webpack-merge');
 
 const env = process.env.npm_lifecycle_event === 'build' ? 'prod' : 'dev';
@@ -54,6 +55,10 @@ const common = {
     }),
     new webpack.ProvidePlugin({
       Promise: ['es6-promise', 'Promise']
+    }),
+    new StyleLintPlugin({
+      context: path.resolve(__dirname, '<%= options.src %>'),
+      files: '**/*.s?(a|c)ss'
     })
   ],
 
