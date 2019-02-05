@@ -15,7 +15,7 @@ module.exports = class extends Generator {
       'eslint-config-airbnb-es5',
       'eslint-plugin-react', // unfortunately a dep of eslint-config-airbnb-es5 even if we're not using react :/
       'cssnano',
-      'gulp',
+      'gulp@^4.0.0',
       'gulp-if',
       'gulp-postcss',
       'gulp-sass',
