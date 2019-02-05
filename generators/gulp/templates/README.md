@@ -98,15 +98,24 @@ you can create any other subfolders as you please (or just put files in the root
 of `<%= options.src %>`).
 <% } -%>
 
-### JavaScript linting
+### Linting
 
-Use `npm run lint` to run the linter. The configuration file for the linter is
-at `.eslintrc.json`, where you can tweak you configuration as you please - refer
-to the [eslint documentation](https://eslint.org/docs/user-guide/configuring).
-By default the [Airbnb JavaScript style
-guide](https://github.com/airbnb/javascript) is used (with a few tweaks). You
-can also run `npm run lint:fix` to fix any automatically fixable errors
-directly.
+### JavaScript
+
+Use `npm run lint` to run the JS linter. The configuration file for the linter
+is at `.eslintrc.json`, where you can tweak you configuration as you please -
+refer to the [eslint
+documentation](https://eslint.org/docs/user-guide/configuring). By default the
+[Airbnb JavaScript style guide](https://github.com/airbnb/javascript) is used
+(with a few tweaks). You can also run `npm run lint:fix` to fix any
+automatically fixable errors directly.
+
+### SCSS
+
+Use `npm run stylelint` to run the SCSS/CSS linter. The configuration file is at
+`.stylelintrc` - refer to the [stylelint docs](https://stylelint.io/) to see how
+you can tweak configuration if you would like. Some errors can be automatically
+fixed - use the `npm run stylelint:fix` command for that.
 
 ## Deploying
 

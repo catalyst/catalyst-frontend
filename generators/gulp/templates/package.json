@@ -8,7 +8,9 @@
     "build": "./node_modules/.bin/gulp build",
     "start": "./node_modules/.bin/gulp",
     "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.js\"",
-    "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.js\" --fix"
+    "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.js\" --fix",
+    "stylelint": "./node_modules/.bin/stylelint '<%= options.src %>/**/*.{scss,css}'",
+    "stylelint:fix": "./node_modules/.bin/stylelint '<%= options.src %>/**/*.{scss,css}' --fix"
   },
   "license": "UNLICENSED",
   "private": true,
