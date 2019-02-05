@@ -20,7 +20,10 @@ module.exports = class extends Generator {
       'gulp-postcss',
       'gulp-sass',
       'gulp-sourcemaps',
-      'postcss-flexbugs-fixes'
+      'postcss-flexbugs-fixes',
+      'stylelint',
+      'stylelint-config-sass-guidelines',
+      'stylelint-config-standard',
     ];
     this.projectPackages = [];
 
@@ -266,6 +269,11 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('.eslintrc.json'),
       this.destinationPath('.eslintrc.json')
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('example.stylelintrc'),
+      this.destinationPath('.stylelintrc')
     );
 
     this.fs.copyTpl(
