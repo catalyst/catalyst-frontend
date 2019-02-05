@@ -7,8 +7,10 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('autoprefixer');
 const flexfixes = require('postcss-flexbugs-fixes');
 const cssnano = require('cssnano');
-<% if (options.js) { %>const concatjs = require('gulp-concat');
+const stylelint = require('gulp-stylelint');<% if (options.js) { %>
+const concatjs = require('gulp-concat');
 const uglifyjs = require('gulp-uglify');
+const eslint = require('gulp-eslint');
 <% } -%>
 
 <% if (options.flatStructure) { -%>
@@ -54,6 +56,11 @@ gulp.task('copy-files', () => {
 
 gulp.task('scss', () => {
   return gulp.src(PATHS.src.scss)
+    .pipe(stylelint({
+      reporters: [
+        {formatter: 'string', console: true}
+      ]})
+    )
     .pipe(sass({
         includePaths: [<% if (options.bootstrap4) { %>
           './node_modules/bootstrap/scss/'
@@ -97,6 +104,8 @@ gulp.task('js', function() {
       './node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',<% } %>
       PATHS.src.js
     ])
+    .pipe(eslint())
+    .pipe(eslint.format())
     .pipe(sourcemaps.init())
     .pipe(concatjs('bundle.js'))
     .pipe(gulpif(buildFlag, uglifyjs({ mangle: false })))
