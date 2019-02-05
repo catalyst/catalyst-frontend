@@ -30,6 +30,10 @@ module.exports = class extends Generator {
       'postcss-loader',
       'sass-loader',
       'style-loader',
+      'stylelint',
+      'stylelint-config-sass-guidelines',
+      'stylelint-config-standard',
+      'stylelint-webpack-plugin',
       'url-loader',
       'webpack',
       'webpack-cli',
@@ -184,6 +188,11 @@ module.exports = class extends Generator {
       this.templatePath('.eslintrc.json'),
       this.destinationPath('.eslintrc.json'),
       { options: this.props }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('example.stylelintrc'),
+      this.destinationPath('.stylelintrc')
     );
 
     if (this.props.jest) {

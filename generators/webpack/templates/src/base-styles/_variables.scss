@@ -1,8 +1,8 @@
 <% if (options.bootstrap) { %>// variables index - all actual variables should go into project-variables
 // or custom-bootstrap variables files.
 
-@import "project-variables"; // project variables
-@import "custom-bootstrap";  // overridden bootstrap variables
+@import 'project-variables'; // project variables
+@import 'custom-bootstrap';  // overridden bootstrap variables
 // the default bootstrap variables get included via main import in index.scss<% } else { %>
 // your project variables go here
 // this file can safely be included from multiple locations as variables do
