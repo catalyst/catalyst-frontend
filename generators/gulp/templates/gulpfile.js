@@ -45,7 +45,26 @@ const PATHS = {
   ]
 }
 <% } -%>
+
+<% if (options.drupalbootstrap) { -%>
+// Copy bootstrap assets config.
+const assets = {
+    'src': 'node_modules/bootstrap-sass/**/*',
+    'dst': 'bootstrap/'
+  }
+<% } -%>
+
+
 let buildFlag = false; // used to determine if minification needed
+
+<% if (options.drupalbootstrap) { -%>
+// Copy bootstrap assets.
+gulp.task('assets-copy', function () {
+  return gulp
+    .src(assets.src)
+    .pipe(gulp.dest(assets.dst));
+});
+<% } -%>
 
 <% if (!options.flatStructure) { -%>
 gulp.task('copy-files', () => {
@@ -120,11 +139,11 @@ gulp.task('set-build-flag', function(done) {
   done();
 });
 
-gulp.task('build', gulp.series('set-build-flag', <% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
+gulp.task('build', gulp.series(<% if (options.drupalbootstrap) { %>'assets-copy', <% } %>'set-build-flag', <% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
 
 gulp.task('watch', () => {
   <% if (options.browsersync) { %>browsersync.init(BROWSERSYNCOPTS);<% } %>
   gulp.watch(<% if (options.flatStructure) { %>PATHS.src.scss<% } else { %>PATHS.src.root<% } %>, gulp.parallel(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
 });
 
-gulp.task('default', gulp.series(<% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>, 'watch'));
+gulp.task('default', gulp.series(<% if (options.drupalbootstrap) { %>'assets-copy', <% } %><% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>, 'watch'));
