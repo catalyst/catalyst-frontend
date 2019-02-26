@@ -1,6 +1,6 @@
 {
   "name": "catalyst-frontend",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "A configurable frontend build pipeline that caters for everything from simple SASS compilation only, right through to ES2015 plus React.",
   "homepage": "https://github.com/catalyst/catalyst-frontend",
   "author": {
@@ -26,12 +26,12 @@
     "yeoman-generator"
   ],
   "devDependencies": {
-    "yeoman-test": "^1.9.1",
-    "yeoman-assert": "^3.1.1",
     "eslint": "^5.9.0",
     "eslint-config-xo-space": "^0.20.0",
-    "jest": "^23.6.0",
-    "jest-cli": "^23.6.0"
+    "jest": "^24.1.0",
+    "jest-cli": "^24.1.0",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^1.9.1"
   },
   "dependencies": {
     "chalk": "^2.4.1",

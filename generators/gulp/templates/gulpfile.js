@@ -47,6 +47,12 @@ const PATHS = {
 <% } -%>
 let buildFlag = false; // used to determine if minification needed
 
+<% if (options.drupalbootstrap) { -%>
+  gulp.task('copy-bootstrap', () => {
+    return gulp.src('node_modules/bootstrap-sass/**/*')
+      .pipe(gulp.dest('bootstrap/'));
+  });
+<% } -%>
 <% if (!options.flatStructure) { -%>
 gulp.task('copy-files', () => {
   return gulp.src([PATHS.src.root, '!./<%= options.src %>/scss', '!' + PATHS.src.scss<% if (options.js) { %>, '!' + PATHS.src.js<% } %>])
@@ -120,7 +126,7 @@ gulp.task('set-build-flag', function(done) {
   done();
 });
 
-gulp.task('build', gulp.series('set-build-flag', <% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %>));
+gulp.task('build', gulp.series('set-build-flag', <% if (!options.flatStructure) { %>'copy-files', <% } %>'scss'<% if (options.js) { %>, 'js'<% } %><% if (options.drupalbootstrap) { %>, 'copy-bootstrap'<% } %>));
 
 gulp.task('watch', () => {
   <% if (options.browsersync) { %>browsersync.init(BROWSERSYNCOPTS);<% } %>
