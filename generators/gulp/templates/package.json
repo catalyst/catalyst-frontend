@@ -4,6 +4,9 @@
   "description": "Frontend build process created by catalyst-frontend",
   "main": "gulpfile.js",
   "scripts": {
+    <% if (options.drupalbootstrap) { -%>
+    "postinstall": "./node_modules/.bin/gulp copy-bootstrap",
+    <% } %>
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/gulp build",
     "start": "./node_modules/.bin/gulp",
