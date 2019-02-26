@@ -302,14 +302,16 @@ module.exports = class extends Generator {
       { options: this.props }
     );
 
-    this.fs.copyTpl(
-      this.templatePath('index.html'),
-      this.destinationPath(`${distOrRootPath}index.html`),
-      {
-        name: this.options.name,
-        options: this.props
-      }
-    );
+    if (this.props.index) {
+      this.fs.copyTpl(
+        this.templatePath('index.html'),
+        this.destinationPath(`${distOrRootPath}index.html`),
+        {
+          name: this.options.name,
+          options: this.props
+        }
+      );
+    }
 
     this.fs.copyTpl(
       this.templatePath('scss/index.scss'),
