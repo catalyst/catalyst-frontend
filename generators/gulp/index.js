@@ -313,18 +313,20 @@ module.exports = class extends Generator {
       );
     }
 
-    this.fs.copyTpl(
-      this.templatePath('scss/index.scss'),
-      this.destinationPath(`${scssPath}/index.scss`),
-      { options: this.props }
-    );
+    if (!this.props.drupalbootstrap) {
+      this.fs.copyTpl(
+        this.templatePath('scss/index.scss'),
+        this.destinationPath(`${scssPath}/index.scss`),
+        { options: this.props }
+      );
 
-    this.fs.copyTpl(
-      this.templatePath('scss/_variables-project.scss'),
-      this.destinationPath(`${scssPath}/_variables-project.scss`)
-    );
+      this.fs.copyTpl(
+        this.templatePath('scss/_variables-project.scss'),
+        this.destinationPath(`${scssPath}/_variables-project.scss`)
+      );
+    }
 
-    if (this.props.bootstrap) {
+    if (this.props.bootstrap && !this.props.drupalbootstrap) {
       this.fs.copyTpl(
         this.templatePath('scss/_variables-bootstrap.scss'),
         this.destinationPath(`${scssPath}/_variables-bootstrap.scss`),
