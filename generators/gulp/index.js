@@ -313,18 +313,20 @@ module.exports = class extends Generator {
       );
     }
 
-    this.fs.copyTpl(
-      this.templatePath('scss/index.scss'),
-      this.destinationPath(`${scssPath}/index.scss`),
-      { options: this.props }
-    );
+    if (!this.props.drupalbootstrap) {
+      this.fs.copyTpl(
+        this.templatePath('scss/index.scss'),
+        this.destinationPath(`${scssPath}/index.scss`),
+        { options: this.props }
+      );
 
-    this.fs.copyTpl(
-      this.templatePath('scss/_variables-project.scss'),
-      this.destinationPath(`${scssPath}/_variables-project.scss`)
-    );
+      this.fs.copyTpl(
+        this.templatePath('scss/_variables-project.scss'),
+        this.destinationPath(`${scssPath}/_variables-project.scss`)
+      );
+    }
 
-    if (this.props.bootstrap) {
+    if (this.props.bootstrap && !this.props.drupalbootstrap) {
       this.fs.copyTpl(
         this.templatePath('scss/_variables-bootstrap.scss'),
         this.destinationPath(`${scssPath}/_variables-bootstrap.scss`),
@@ -342,7 +344,7 @@ module.exports = class extends Generator {
       mkdirp(`${this.props.src}/img`);
       if (this.props.js) { mkdirp(`${this.props.src}/js`); }
     } else if (this.props.bootstrap && !this.props.bootstrap4) {
-      // make a fonts folder
+      // Make a fonts folder.
       mkdirp('fonts');
     }
 
@@ -352,12 +354,12 @@ module.exports = class extends Generator {
 
   end() {
     if (this.props.bootstrap && !this.props.bootstrap4) {
-      // copy over the Bootstrap 3 font
+      // Copy over the Bootstrap 3 fonts.
       if (!this.props.flatStructure) {
         this.spawnCommandSync(
           'cp', ['-r', 'node_modules/bootstrap-sass/assets/fonts/bootstrap', `${this.props.src}/fonts`]
         );
-      } else {
+      } else if (!this.props.drupalbootstrap) {
         this.spawnCommandSync(
           'cp', ['-r', 'node_modules/bootstrap-sass/assets/fonts/bootstrap', 'fonts']
         );
@@ -365,7 +367,7 @@ module.exports = class extends Generator {
     }
 
     if (this.props.drupalbootstrap) {
-      // copy Bootstrap 3 assets to local folder for Drupal
+      // Copy Bootstrap 3 assets to local folder for Drupal.
       // https://drupal-bootstrap.org/api/bootstrap/starterkits!sass!README.md/group/sub_theming_sass/8
       this.spawnCommandSync(
         'cp', ['-r', 'node_modules/bootstrap-sass/.', 'bootstrap']
