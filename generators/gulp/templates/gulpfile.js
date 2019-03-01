@@ -68,6 +68,7 @@ gulp.task('scss', () => {
       ]})
     )
     .pipe(sass({
+        sourceComments: 'map',
         includePaths: [<% if (options.bootstrap4) { %>
           './node_modules/bootstrap/scss/'
           <% } else if (options.bootstrap) { %>
