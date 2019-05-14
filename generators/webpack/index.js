@@ -233,13 +233,11 @@ module.exports = class extends Generator {
       );
     }
 
-    if (options.index) {
-      this.fs.copyTpl(
-        this.templatePath('src/index.html'),
-        this.destinationPath(this.props.src + '/index.html'),
-        { options: this.props, name: this.options.name }
-      );
-    }
+    this.fs.copyTpl(
+      this.templatePath('src/index.html'),
+      this.destinationPath(this.props.src + '/index.html'),
+      { options: this.props, name: this.options.name }
+    );
 
     this.fs.copyTpl(
       this.templatePath('src/index.scss'),
