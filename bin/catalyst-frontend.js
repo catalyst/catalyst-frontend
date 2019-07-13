@@ -14,7 +14,7 @@ if (options.reconfigure) {
 
 env.register(require.resolve('../generators/app/index.js'), 'catalyst-frontend');
 
-env.run('catalyst-frontend', options, function (err) {
+env.run('catalyst-frontend', options, function(err) {
   if (err) {
     console.log(err);
   }

@@ -1,6 +1,6 @@
 {
   "name": "catalyst-frontend",
-  "version": "0.5.8",
+  "version": "0.6.0",
   "description": "A configurable frontend build pipeline that caters for everything from simple SASS compilation only, right through to ES2015 plus React.",
   "homepage": "https://github.com/catalyst/catalyst-frontend",
   "author": {
@@ -16,6 +16,7 @@
     "frontend",
     "gulp",
     "bootstrap",
+    "storybook",
     "jquery",
     "webpack",
     "react",

@@ -11,6 +11,9 @@
     "test:coverage": "./node_modules/.bin/jest --coverage"<% } %>,
     "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\"",
     "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\" --fix",
+    <% if (options.storybook) { %>
+    "storybook": "start-storybook",
+    <% } %>
     "stylelint": "./node_modules/.bin/stylelint '<%= options.src %>/**/*.{scss,css}'",
     "stylelint:fix": "./node_modules/.bin/stylelint '<%= options.src %>/**/*.{scss,css}' --fix"
   },

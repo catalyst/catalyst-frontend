@@ -55,21 +55,28 @@ module.exports = class extends Generator {
         'name': 'react',
         'message': `Do you want to add React to your project?`,
         'default': true,
-        'when': typeof(this.props.react) !== "boolean"
+        'when': typeof (this.props.react) !== "boolean"
       },
       {
         'type': 'confirm',
         'name': 'jest',
         'message': `Do you want to add Jest (for testing) to your project?`,
         'default': true,
-        'when': typeof(this.props.jest) !== "boolean"
+        'when': typeof (this.props.jest) !== "boolean"
       },
       {
         'type': 'confirm',
         'name': 'bootstrap',
         'message': `Do you want to add Bootstrap to your project?`,
         'default': false,
-        'when': typeof(this.props.bootstrap) !== "boolean"
+        'when': typeof (this.props.bootstrap) !== "boolean"
+      },
+      {
+        'type': 'confirm',
+        'name': 'storybook',
+        'message': `Do you want to add Storybook to your project?`,
+        'default': false,
+        'when': typeof (this.props.storybook) !== "boolean"
       },
       {
         'type': 'input',
@@ -138,6 +145,10 @@ module.exports = class extends Generator {
 
     if (this.props.bootstrap) {
       this.projectPackages.push('bootstrap');
+    }
+
+    if (this.props.storybook) {
+      this.projectPackages.push('@storybook/react');
     }
   }
 
@@ -269,6 +280,20 @@ module.exports = class extends Generator {
         this.destinationPath(this.props.src + '/base-styles/_project-variables.scss'),
         { options: this.props }
       );
+    }
+
+    if (this.props.storybook) {
+      this.fs.copyTpl(
+        this.templatePath('.storybook/config.js'),
+        this.destinationPath('.storybook/config.js'),
+        { options: this.props }
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('stories/index.js'),
+        this.destinationPath('stories/index.js'),
+        { options: this.props }
+      )
     }
 
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
