@@ -94,7 +94,7 @@ switch (env) {
                 loader: 'postcss-loader',
                 options: {
                   plugins: [
-                    autoprefixer({browsers: ['last 2 versions']}),
+                    autoprefixer(),
                     flexfixes()
                   ]
                 }
@@ -102,7 +102,9 @@ switch (env) {
               {
                 loader: 'sass-loader',
                 options: {
-                  includePaths: [path.resolve(__dirname, '<%= options.src %>')]
+                  sassOptions: {
+                    includePaths: [path.resolve(__dirname, '<%= options.src %>')]
+                  }
                 }
               }
             ]
@@ -130,7 +132,7 @@ switch (env) {
                   loader: 'postcss-loader',
                   options: {
                     plugins: [
-                      autoprefixer({browsers: ['last 2 versions']}),
+                      autoprefixer(),
                       flexfixes()
                     ]
                   }
@@ -138,7 +140,9 @@ switch (env) {
                 {
                   loader: 'sass-loader',
                   options: {
-                    includePaths: [path.resolve(__dirname, '<%= options.src %>')]
+                    sassOptions: {
+                      includePaths: [path.resolve(__dirname, '<%= options.src %>')]
+                    }
                   }
                 }
               ]
