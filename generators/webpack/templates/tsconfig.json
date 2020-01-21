@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "<%= options.src %>",
+    "target": "es5",
+    "outDir": "./<%= options.dist %>/",
+    "sourceMap": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "checkJs": false,
+    "jsx": "react"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

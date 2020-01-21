@@ -9,8 +9,13 @@
     "test": "./node_modules/.bin/jest",
     "test:watch": "./node_modules/.bin/jest --watch",
     "test:coverage": "./node_modules/.bin/jest --coverage"<% } %>,
-    "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\"",
-    "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\" --fix",
+    <% if (options.typescript) { %>
+      "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx,ts,tsx}<% } else { %>js,ts<% } %>\"",
+      "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx,ts,tsx}<% } else { %>js,ts<% } %>\" --fix",
+    <% } else { %>
+      "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\"",
+      "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\" --fix",
+    <% } %>
     <% if (options.storybook) { %>
     "storybook": "start-storybook",
     <% } %>
@@ -32,7 +37,11 @@
       "^.+\\.(scss|css)$": "<rootDir>/jest-mock-styles.js"
     },
     "collectCoverageFrom": [
+      <% if (options.typescript) { %>
+      "<%= options.src %>/**/*.{js,ts<% if (options.react) { %>,jsx,tsx<% } %>}",
+      <% } else { %>
       "<%= options.src %>/**/*.{js<% if (options.react) { %>,jsx<% } %>}",
+      <% } %>
       "!node_modules/**"
     ]<% if (options.react) { %>,
     "setupFiles": [
