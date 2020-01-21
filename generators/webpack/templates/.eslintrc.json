@@ -37,6 +37,12 @@
     "import/no-named-as-default": 0,
     "max-len": ["warn", { "code": 100 , "ignoreComments": true }],
     "quotes": ["warn", "single", { "allowTemplateLiterals": true }]<% if (options.react) { %>,
+    "import/no-unresolved": 0,
+    "react/destructuring-assignment": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    <% if (options.typescript) { %>
+      "react/prop-types": 0,
+      <% } %>
     "react/jsx-no-bind": ["error", {
       "ignoreDOMComponents": false,
       "ignoreRefs": false,

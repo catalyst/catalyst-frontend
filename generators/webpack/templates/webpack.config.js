@@ -12,7 +12,7 @@ let config = {};
 
 // config that is shared between all types of build (dev and prod)
 const common = {
-  entry: ['@babel/polyfill', 'whatwg-fetch', './<%= options.src %>/index.js<% if (options.react) { %>x<% } %>'],
+  entry: ['@babel/polyfill', 'whatwg-fetch', './<%= options.src %>/index.<% if (options.typescript) { %>t<% } else { %>j<% } %>s<% if (options.react) { %>x<% } %>'],
 
   output: {
     path: path.resolve(__dirname, '<%= options.dist %>'),
@@ -22,17 +22,31 @@ const common = {
 
   module: {
     rules: [
-      {
-        enforce: 'pre', // lint files before they are transformed, config in .eslintrc.json
-        test: /\.(js<% if (options.react) { %>|jsx<% } %>)$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-      },
-      {
-        test: /\.(js<% if (options.react) { %>|jsx<% } %>)$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader' // config in .babelrc
-      },
+      <% if (options.typescript) { %>
+        {
+          enforce: 'pre', // lint files before they are transformed, config in .eslintrc.json
+          test: /\.(ts<% if (options.react) { %>|tsx<% } %>)$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+        },
+        {
+          test: /\.(ts<% if (options.react) { %>|tsx<% } %>)$/,
+          exclude: /node_modules/,
+          loader: 'ts-loader' // config in .tsconfig
+        },
+        <% } else { %>
+          {
+            enforce: 'pre', // lint files before they are transformed, config in .eslintrc.json
+            test: /\.(js<% if (options.react) { %>|jsx<% } %>)$/,
+            exclude: /node_modules/,
+            loader: 'eslint-loader',
+          },
+          {
+            test: /\.(js<% if (options.react) { %>|jsx<% } %>)$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader' // config in .babelrc
+          },
+        <% } %>
       {
         test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: /node_modules/,
@@ -63,7 +77,11 @@ const common = {
   ],
 
   resolve: {
-    extensions: ['.js'<% if (options.react) { %>, '.jsx'<% } %>, '.json', '.scss'],
+    <% if (options.typescript) { %>
+      extensions: ['.js', '.ts,'<% if (options.react) { %>, '.jsx', '.tsx'<% } %>, '.json', '.scss'],
+    <% } else { %>
+      extensions: ['.js'<% if (options.react) { %>, '.jsx'<% } %>, '.json', '.scss'],
+    <% } %>
     modules: [path.resolve(__dirname, '<%= options.src %>'), 'node_modules']
   }
 };

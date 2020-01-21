@@ -66,6 +66,13 @@ module.exports = class extends Generator {
       },
       {
         'type': 'confirm',
+        'name': 'typescript',
+        'message': `Do you want to add Typescript to your project?`,
+        'default': true,
+        'when': typeof (this.props.typescript) !== "boolean"
+      },
+      {
+        'type': 'confirm',
         'name': 'bootstrap',
         'message': `Do you want to add Bootstrap to your project?`,
         'default': false,
@@ -141,6 +148,25 @@ module.exports = class extends Generator {
       this.packages.push('enzyme-adapter-react-16');
       this.packages.push('react-addons-test-utils');
       this.packages.push('react-test-renderer');
+    }
+
+    if (this.props.typescript) {
+      this.packages.push('typescript');
+      this.packages.push('ts-loader');
+      this.packages.push('ts-loader');
+
+      //typescript
+      this.packages.push('@types/webpack-env');
+      this.packages.push('@types/node');
+
+      if (this.props.react) {
+        this.packages.push('@types/react');
+        this.packages.push('@types/react-dom');
+      }
+    }
+
+    if (this.props.typescript && this.props.jest) {
+      this.packages.push('ts-jest');
     }
 
     if (this.props.bootstrap) {
@@ -219,16 +245,29 @@ module.exports = class extends Generator {
     }
 
     if (this.props.react) {
-      this.fs.copyTpl(
-        this.templatePath('src/index.js'),
-        this.destinationPath(this.props.src + '/index.jsx'),
-        { options: this.props }
-      );
+      if (this.props.typescript) {
+        this.fs.copyTpl(
+          this.templatePath('src/index.js'),
+          this.destinationPath(this.props.src + '/index.tsx'),
+          { options: this.props }
+        );
 
-      this.fs.copyTpl(
-        this.templatePath('src/app.jsx'),
-        this.destinationPath(this.props.src + '/app.jsx')
-      );
+        this.fs.copyTpl(
+          this.templatePath('src/app.jsx'),
+          this.destinationPath(this.props.src + '/app.tsx')
+        );
+      } else {
+        this.fs.copyTpl(
+          this.templatePath('src/index.js'),
+          this.destinationPath(this.props.src + '/index.jsx'),
+          { options: this.props }
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('src/app.jsx'),
+          this.destinationPath(this.props.src + '/app.jsx')
+        );
+      }
     } else {
       this.fs.copyTpl(
         this.templatePath('src/index.js'),
@@ -241,6 +280,14 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('jest-setup.js'),
         this.destinationPath('jest-setup.js')
+      );
+    }
+
+    if (this.props.typescript) {
+      this.fs.copyTpl(
+        this.templatePath('tsconfig.json'),
+        this.destinationPath('tsconfig.json'),
+        { options: this.props }
       );
     }
 
