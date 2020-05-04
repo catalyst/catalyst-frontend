@@ -78,7 +78,7 @@ const common = {
 
   resolve: {
     <% if (options.typescript) { %>
-      extensions: ['.js', '.ts,'<% if (options.react) { %>, '.jsx', '.tsx'<% } %>, '.json', '.scss'],
+      extensions: ['.js', '.ts'<% if (options.react) { %>, '.jsx', '.tsx'<% } %>, '.json', '.scss'],
     <% } else { %>
       extensions: ['.js'<% if (options.react) { %>, '.jsx'<% } %>, '.json', '.scss'],
     <% } %>
