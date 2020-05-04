@@ -21,6 +21,7 @@ module.exports = class extends Generator {
       'eslint-loader',
       'eslint-plugin-import',
       'eslint-plugin-react',
+      'eslint-plugin-react-hooks',
       'eslint-plugin-jsx-a11y',
       'extract-text-webpack-plugin',
       'file-loader',
@@ -155,11 +156,14 @@ module.exports = class extends Generator {
       this.packages.push('ts-loader');
       this.packages.push('ts-loader');
 
-      //typescript
+      // Typescript
       this.packages.push('@types/webpack-env');
       this.packages.push('@types/node');
 
       if (this.props.react) {
+        this.packages.push('@typescript-eslint/eslint-plugin');
+        this.packages.push('eslint-config-airbnb-typescript');
+
         this.packages.push('@types/react');
         this.packages.push('@types/react-dom');
       }
