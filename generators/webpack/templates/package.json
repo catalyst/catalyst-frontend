@@ -1,6 +1,6 @@
 {
   "name": "<%= name %>-frontend-build",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Frontend build process created by catalyst-frontend",
   "main": "<%= options.src %>/index.js<% if (options.react) { %>x<% } %>",
   "scripts": {
@@ -24,8 +24,17 @@
   },
   "license": "UNLICENSED",
   "private": true,
+  "browserslist": [
+    "last 2 versions",
+    "edge >= 38",
+    "safari >= 9",
+    "ie >= 11",
+    "chrome >= 60",
+    "firefox >= 51"
+  ],
   "dependencies": {},
   "devDependencies": {}<% if (options.jest) { %>,
+
   "jest": {
     "verbose": true,
     "moduleDirectories": [
@@ -44,7 +53,7 @@
       <% } %>
       "!node_modules/**"
     ]<% if (options.react) { %>,
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "./jest-setup.js"
     ]
     <% } %>

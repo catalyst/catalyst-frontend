@@ -5,7 +5,7 @@ const flexfixes = require('postcss-flexbugs-fixes');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 const env = process.env.npm_lifecycle_event === 'build' ? 'prod' : 'dev';
 let config = {};

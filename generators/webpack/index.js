@@ -6,7 +6,7 @@ const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
-    super(args, opts)
+    super(args, opts);
 
     this.packages = [
       '@babel/core',
@@ -41,10 +41,7 @@ module.exports = class extends Generator {
       'webpack-dev-server',
       'webpack-merge'
     ];
-    this.projectPackages = [
-      '@babel/polyfill',
-      'whatwg-fetch'
-    ];
+    this.projectPackages = ['@babel/polyfill', 'whatwg-fetch'];
 
     this.props = this.options.reconfigure ? {} : this.config.getAll();
   }
@@ -52,74 +49,75 @@ module.exports = class extends Generator {
   prompting() {
     const prompts = [
       {
-        'type': 'confirm',
-        'name': 'react',
-        'message': `Do you want to add React to your project?`,
-        'default': true,
-        'when': typeof (this.props.react) !== "boolean"
+        type: 'confirm',
+        name: 'react',
+        message: 'Do you want to add React to your project?',
+        default: true,
+        when: typeof this.props.react !== 'boolean'
       },
       {
-        'type': 'confirm',
-        'name': 'jest',
-        'message': `Do you want to add Jest (for testing) to your project?`,
-        'default': true,
-        'when': typeof (this.props.jest) !== "boolean"
+        type: 'confirm',
+        name: 'jest',
+        message: 'Do you want to add Jest (for testing) to your project?',
+        default: true,
+        when: typeof this.props.jest !== 'boolean'
       },
       {
-        'type': 'confirm',
-        'name': 'typescript',
-        'message': `Do you want to add Typescript to your project?`,
-        'default': true,
-        'when': typeof (this.props.typescript) !== "boolean"
+        type: 'confirm',
+        name: 'typescript',
+        message: 'Do you want to add Typescript to your project?',
+        default: true,
+        when: typeof this.props.typescript !== 'boolean'
       },
       {
-        'type': 'confirm',
-        'name': 'bootstrap',
-        'message': `Do you want to add Bootstrap to your project?`,
-        'default': false,
-        'when': typeof (this.props.bootstrap) !== "boolean"
+        type: 'confirm',
+        name: 'bootstrap',
+        message: 'Do you want to add Bootstrap to your project?',
+        default: false,
+        when: typeof this.props.bootstrap !== 'boolean'
       },
       {
-        'type': 'confirm',
-        'name': 'storybook',
-        'message': `Do you want to add Storybook to your project?`,
-        'default': false,
-        'when': typeof (this.props.storybook) !== "boolean"
+        type: 'confirm',
+        name: 'storybook',
+        message: 'Do you want to add Storybook to your project?',
+        default: false,
+        when: typeof this.props.storybook !== 'boolean'
       },
       {
-        'type': 'input',
-        'name': 'src',
-        'message': 'Name of the directory where your uncompiled files will live:',
-        'default': answers => {
+        type: 'input',
+        name: 'src',
+        message: 'Name of the directory where your uncompiled files will live:',
+        default: answers => {
           if (answers.flatStructure || this.props.flatStructure) {
             return 'scss';
           }
 
           return 'src';
         },
-        'filter': input => kebabCase(input),
-        'when': !this.props.src && !this.props.flatStructure
+        filter: input => kebabCase(input),
+        when: !this.props.src && !this.props.flatStructure
       },
       {
-        'type': 'input',
-        'name': 'dist',
-        'message': 'Name of the directory where your built files will be written:',
-        'default': answers => {
+        type: 'input',
+        name: 'dist',
+        message:
+          'Name of the directory where your built files will be written:',
+        default: answers => {
           if (answers.flatStructure || this.props.flatStructure) {
             return 'css';
           }
 
           return 'dist';
         },
-        'filter': input => kebabCase(input),
-        'validate': (input, answers) => {
+        filter: input => kebabCase(input),
+        validate: (input, answers) => {
           if (input === answers.src) {
-            return "Folder names for uncompiled and built files must be different."
+            return 'Folder names for uncompiled and built files must be different.';
           }
 
           return true;
         },
-        'when': !this.props.dist && !this.props.flatStructure
+        when: !this.props.dist && !this.props.flatStructure
       }
     ];
 
@@ -145,15 +143,13 @@ module.exports = class extends Generator {
     }
 
     if (this.props.jest && this.props.react) {
-      this.packages.push('enzyme');
-      this.packages.push('enzyme-adapter-react-16');
+      this.packages.push('@testing-library/react');
       this.packages.push('react-addons-test-utils');
       this.packages.push('react-test-renderer');
     }
 
     if (this.props.typescript) {
       this.packages.push('typescript');
-      this.packages.push('ts-loader');
       this.packages.push('ts-loader');
 
       // Typescript
@@ -167,10 +163,13 @@ module.exports = class extends Generator {
         this.packages.push('@types/react');
         this.packages.push('@types/react-dom');
       }
-    }
 
-    if (this.props.typescript && this.props.jest) {
-      this.packages.push('ts-jest');
+      if (this.props.jest) {
+        this.projectPackages.push('ts-jest');
+        this.projectPackages.push('@testing-library/jest-dom');
+        this.projectPackages.push('@types/jest');
+        this.projectPackages.push('@babel/preset-typescript');
+      }
     }
 
     if (this.props.bootstrap) {
@@ -186,49 +185,49 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      { options: this.props, name: this.options.name }
+      {options: this.props, name: this.options.name}
     );
 
     this.fs.copyTpl(
       this.templatePath('.babelrc'),
       this.destinationPath('.babelrc'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('.editorconfig'),
       this.destinationPath('.editorconfig'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('webpack.config.js'),
       this.destinationPath('webpack.config.js'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('README.md'),
       this.destinationPath('README.md'),
-      { options: this.props, name: this.options.name }
+      {options: this.props, name: this.options.name}
     );
 
     this.fs.copyTpl(
       this.templatePath('example.gitignore'),
       this.destinationPath('.gitignore'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('example.gitattributes'),
       this.destinationPath('.gitattributes'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('.eslintrc.json'),
       this.destinationPath('.eslintrc.json'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
@@ -253,7 +252,7 @@ module.exports = class extends Generator {
         this.fs.copyTpl(
           this.templatePath('src/index.js'),
           this.destinationPath(this.props.src + '/index.tsx'),
-          { options: this.props }
+          {options: this.props}
         );
 
         this.fs.copyTpl(
@@ -264,7 +263,7 @@ module.exports = class extends Generator {
         this.fs.copyTpl(
           this.templatePath('src/index.js'),
           this.destinationPath(this.props.src + '/index.jsx'),
-          { options: this.props }
+          {options: this.props}
         );
 
         this.fs.copyTpl(
@@ -276,7 +275,7 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('src/index.js'),
         this.destinationPath(this.props.src + '/index.js'),
-        { options: this.props }
+        {options: this.props}
       );
     }
 
@@ -291,45 +290,49 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('tsconfig.json'),
         this.destinationPath('tsconfig.json'),
-        { options: this.props }
+        {options: this.props}
       );
     }
 
     this.fs.copyTpl(
       this.templatePath('src/index.html'),
       this.destinationPath(this.props.src + '/index.html'),
-      { options: this.props, name: this.options.name }
+      {options: this.props, name: this.options.name}
     );
 
     this.fs.copyTpl(
       this.templatePath('src/index.scss'),
       this.destinationPath(this.props.src + '/index.scss'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('src/base-styles/_base.scss'),
       this.destinationPath(this.props.src + '/base-styles/_base.scss'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('src/base-styles/_variables.scss'),
       this.destinationPath(this.props.src + '/base-styles/_variables.scss'),
-      { options: this.props }
+      {options: this.props}
     );
 
     if (this.props.bootstrap) {
       this.fs.copyTpl(
         this.templatePath('src/base-styles/_custom-bootstrap.scss'),
-        this.destinationPath(this.props.src + '/base-styles/_custom-bootstrap.scss'),
-        { options: this.props }
+        this.destinationPath(
+          this.props.src + '/base-styles/_custom-bootstrap.scss'
+        ),
+        {options: this.props}
       );
 
       this.fs.copyTpl(
         this.templatePath('src/base-styles/_project-variables.scss'),
-        this.destinationPath(this.props.src + '/base-styles/_project-variables.scss'),
-        { options: this.props }
+        this.destinationPath(
+          this.props.src + '/base-styles/_project-variables.scss'
+        ),
+        {options: this.props}
       );
     }
 
@@ -337,23 +340,25 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('.storybook/config.js'),
         this.destinationPath('.storybook/config.js'),
-        { options: this.props }
-      )
+        {options: this.props}
+      );
 
       this.fs.copyTpl(
         this.templatePath('stories/index.js'),
         this.destinationPath('stories/index.js'),
-        { options: this.props }
-      )
+        {options: this.props}
+      );
     }
 
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
   }
 
   install() {
-    if (this.props.react) { mkdirp(`${this.props.src}/components`) };
+    if (this.props.react) {
+      mkdirp(`${this.props.src}/components`);
+    }
 
-    this.npmInstall(this.packages, { 'save-dev': true });
-    this.npmInstall(this.projectPackages, { 'save-dev': false });
+    this.npmInstall(this.packages, {'save-dev': true});
+    this.npmInstall(this.projectPackages, {'save-dev': false});
   }
 };
