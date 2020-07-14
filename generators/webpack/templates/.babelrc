@@ -5,14 +5,6 @@
       {
         "forceAllTransforms": true,
         "targets": {
-          "browsers": [
-            "last 2 versions",
-            "edge >= 38",
-            "safari >= 9",
-            "ie >= 11",
-            "chrome >= 60",
-            "firefox >= 51"
-          ]
         },
         "modules": false
       }
@@ -22,7 +14,12 @@
   "plugins": ["@babel/plugin-proposal-object-rest-spread"<% if (options.react) { %> , "react-hot-loader/babel"<% } %>]<% if (options.jest) { %>,
   "env": {
     "test": {
-      "plugins": ["@babel/plugin-transform-modules-commonjs"]
+    <% if (options.typescript) { %>
+      "plugins": ["@babel/plugin-transform-modules-commonjs"],
+      "presets": ["@babel/preset-typescript"]
+    <% } else { %>,
+    "plugins": ["@babel/plugin-transform-modules-commonjs"]
+  }<% } %>
     }
   }<% } %>
 }
