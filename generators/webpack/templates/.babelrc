@@ -1,25 +1,21 @@
 {
   "presets": [
-    [
+      <% if (options.typescript) { %>
+        "@babel/typescript"
+      <% } else { %>
       "@babel/preset-env",
       {
         "forceAllTransforms": true,
-        "targets": {
-        },
         "modules": false
-      }
-    ]<% if (options.react) { %>,
-    "@babel/preset-react"<% } %>
+      }<% } %>
+      <% if (options.react) { %>,
+        "@babel/preset-react"
+      <% } %>
   ],
   "plugins": ["@babel/plugin-proposal-object-rest-spread"<% if (options.react) { %> , "react-hot-loader/babel"<% } %>]<% if (options.jest) { %>,
   "env": {
     "test": {
-    <% if (options.typescript) { %>
-      "plugins": ["@babel/plugin-transform-modules-commonjs"],
-      "presets": ["@babel/preset-typescript"]
-    <% } else { %>,
-    "plugins": ["@babel/plugin-transform-modules-commonjs"]
-  }<% } %>
+      "plugins": ["@babel/plugin-transform-modules-commonjs"]
     }
   }<% } %>
 }

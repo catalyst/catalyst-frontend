@@ -32,7 +32,7 @@ const common = {
         {
           test: /\.(ts<% if (options.react) { %>|tsx<% } %>)$/,
           exclude: /node_modules/,
-          loader: 'ts-loader' // config in .tsconfig
+          loader: 'babel-loader' // config in .tsconfig
         },
         <% } else { %>
           {

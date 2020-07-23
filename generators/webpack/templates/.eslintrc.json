@@ -14,8 +14,9 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
+    <% if (options.typescript) { %>
     "plugin:@typescript-eslint/recommended"
-
+    <% } %>
   ],
   "parserOptions": {
     "ecmaVersion": 2018,<% if (options.react) { %>

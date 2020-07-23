@@ -150,7 +150,7 @@ module.exports = class extends Generator {
 
     if (this.props.typescript) {
       this.packages.push('typescript');
-      this.packages.push('ts-loader');
+      this.packages.push('@babel/preset-typescript');
 
       // Typescript
       this.packages.push('@types/webpack-env');
@@ -165,10 +165,9 @@ module.exports = class extends Generator {
       }
 
       if (this.props.jest) {
-        this.projectPackages.push('ts-jest');
-        this.projectPackages.push('@testing-library/jest-dom');
-        this.projectPackages.push('@types/jest');
-        this.projectPackages.push('@babel/preset-typescript');
+        this.packages.push('ts-jest');
+        this.packages.push('@testing-library/jest-dom');
+        this.packages.push('@types/jest');
       }
     }
 
