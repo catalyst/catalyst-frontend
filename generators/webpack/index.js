@@ -187,10 +187,15 @@ module.exports = class extends Generator {
       {options: this.props, name: this.options.name}
     );
 
-    this.fs.copyTpl(
+    const renderBabelrc = require('./configs/.babelrc.config.js');
+    this.fs.copy(
       this.templatePath('.babelrc'),
       this.destinationPath('.babelrc'),
-      {options: this.props}
+      {
+        process: (contents, filename) => {
+          return renderBabelrc(contents, filename, this.props);
+        }
+      }
     );
 
     this.fs.copyTpl(
