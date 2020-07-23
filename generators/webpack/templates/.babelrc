@@ -1,21 +1,4 @@
 {
-  "presets": [
-      <% if (options.typescript) { %>
-        "@babel/typescript"
-      <% } else { %>
-      "@babel/preset-env",
-      {
-        "forceAllTransforms": true,
-        "modules": false
-      }<% } %>
-      <% if (options.react) { %>,
-        "@babel/preset-react"
-      <% } %>
-  ],
-  "plugins": ["@babel/plugin-proposal-object-rest-spread"<% if (options.react) { %> , "react-hot-loader/babel"<% } %>]<% if (options.jest) { %>,
-  "env": {
-    "test": {
-      "plugins": ["@babel/plugin-transform-modules-commonjs"]
-    }
-  }<% } %>
+  "presets": [],
+  "plugins": []
 }
