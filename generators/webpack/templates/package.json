@@ -1,6 +1,6 @@
 {
   "name": "<%= name %>-frontend-build",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Frontend build process created by catalyst-frontend",
   "main": "<%= options.src %>/index.js<% if (options.react) { %>x<% } %>",
   "scripts": {
@@ -12,6 +12,7 @@
     <% if (options.typescript) { %>
       "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx,ts,tsx}<% } else { %>js,ts<% } %>\"",
       "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx,ts,tsx}<% } else { %>js,ts<% } %>\" --fix",
+      "check-types": "tsc",
     <% } else { %>
       "lint": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\"",
       "lint:fix": "./node_modules/.bin/eslint \"<%= options.src %>/**/*.<% if (options.react) { %>{js,jsx}<% } else { %>js<% } %>\" --fix",

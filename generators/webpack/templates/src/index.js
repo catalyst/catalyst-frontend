@@ -19,7 +19,7 @@ renderComponent(App);
 // Webpack Hot Module Replacement API
 if (module.hot) { // only ever in dev
   module.hot.accept('./app', () => {
-    // eslint-disable-next-line global-require
-    renderComponent(require('./app').default);
+    // global-require
+    renderComponent(require('./app').default); // eslint-disable-line
   });
 }<% } %>
