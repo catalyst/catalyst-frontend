@@ -23,7 +23,7 @@ module.exports = class extends Generator {
       'eslint-plugin-react',
       'eslint-plugin-react-hooks',
       'eslint-plugin-jsx-a11y',
-      'extract-text-webpack-plugin',
+      'mini-css-extract-plugin',
       'file-loader',
       'html-webpack-plugin',
       'node-sass',

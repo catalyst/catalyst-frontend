@@ -3,7 +3,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const flexfixes = require('postcss-flexbugs-fixes');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { merge } = require('webpack-merge');
 
@@ -98,7 +98,7 @@ switch (env) {
         // see https://webpack.js.org/configuration/dev-server/#devserver-proxy
       },
 
-      // because we need to use ExtractTextPlugin for prod, we have to specify the 'dev' scss test here
+      // because we need to use MiniCssExtractPlugin for prod, we have to specify the 'dev' scss test here
       // rather than in common, or else they get merged weirdly
       module: {
         rules: [
@@ -133,7 +133,7 @@ switch (env) {
     break;
   case 'prod':
     // most of the prod specific config is provided directly by webpack as we supplied the -p flag
-    // but we want to only use ExtractTextPlugin for prod, not dev
+    // but we want to only use MiniCssExtractPlugin for prod, not dev
     config = merge(common, {
       devtool: 'source-map',
 
@@ -142,9 +142,10 @@ switch (env) {
           {
             test: /\.scss$/,
             exclude: /node_modules/,
-            use: ExtractTextPlugin.extract({
-              fallback: 'style-loader',
               use: [
+                {
+                  loader: MiniCssExtractPlugin.loader
+                },
                 'css-loader',
                 {
                   loader: 'postcss-loader',
@@ -164,13 +165,12 @@ switch (env) {
                   }
                 }
               ]
-            })
           }
         ]
       },
 
       plugins: [
-        new ExtractTextPlugin('bundle.css')
+        new MiniCssExtractPlugin()
       ]
     });
     break;
