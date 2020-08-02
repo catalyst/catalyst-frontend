@@ -33,6 +33,9 @@
     "chrome >= 60",
     "firefox >= 51"
   ],
+  "engines": {
+    "node": ">= 6.11.5"
+  },
   "dependencies": {},
   "devDependencies": {}<% if (options.jest) { %>,
 

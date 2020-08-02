@@ -98,7 +98,6 @@ catalyst-frontend --reconfigure
 ## TODO
 
 * Ask for project setup parameters e.g. tabs vs whitespaces, semicolons or not
-* Webpack TypeScript option
 
 ## License
 
