@@ -4,7 +4,7 @@ var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
 describe('generator-catalyst-frontend:app', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     return helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({someAnswer: true});
   });

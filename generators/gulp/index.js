@@ -5,7 +5,7 @@ const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
-    super(args, opts)
+    super(args, opts);
 
     this.packages = [
       'autoprefixer',
@@ -174,7 +174,7 @@ module.exports = class extends Generator {
         'filter': input => kebabCase(input),
         'validate': (input, answers) => {
           if (input === answers.src) {
-            return "Folder names for uncompiled and built files must be different."
+            return "Folder names for uncompiled and built files must be different.";
           }
 
           return true;
@@ -258,13 +258,13 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      { options: this.props, name: this.options.name }
+      {options: this.props, name: this.options.name}
     );
 
     this.fs.copyTpl(
       this.templatePath('.editorconfig'),
       this.destinationPath('.editorconfig'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
@@ -280,25 +280,25 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('README.md'),
       this.destinationPath('README.md'),
-      { options: this.props, name: this.options.name }
+      {options: this.props, name: this.options.name}
     );
 
     this.fs.copyTpl(
       this.templatePath('example.gitignore'),
       this.destinationPath('.gitignore'),
-      { options: this.props }
+      {options: this.props}
     );
 
     this.fs.copyTpl(
       this.templatePath('example.gitattributes'),
       this.destinationPath('.gitattributes'),
-      { options: this.props }
+      {options: this.props}
     );
 
     if (this.props.index) {
@@ -316,7 +316,7 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('scss/index.scss'),
         this.destinationPath(`${scssPath}/index.scss`),
-        { options: this.props }
+        {options: this.props}
       );
 
       this.fs.copyTpl(
@@ -329,7 +329,7 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('scss/_variables-bootstrap.scss'),
         this.destinationPath(`${scssPath}/_variables-bootstrap.scss`),
-        { options: this.props }
+        {options: this.props}
       );
     }
 
@@ -347,8 +347,8 @@ module.exports = class extends Generator {
       mkdirp('fonts');
     }
 
-    this.npmInstall(this.packages, { 'save-dev': true });
-    this.npmInstall(this.projectPackages, { 'save-dev': false });
+    this.npmInstall(this.packages, {'save-dev': true});
+    this.npmInstall(this.projectPackages, {'save-dev': false});
   }
 
   end() {

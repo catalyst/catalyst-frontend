@@ -4,7 +4,7 @@ const chalk = require('chalk');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
-    super(args, opts)
+    super(args, opts);
 
     this.props = this.options.props;
   }

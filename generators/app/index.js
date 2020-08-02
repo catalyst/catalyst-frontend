@@ -7,7 +7,7 @@ const kebabCase = require('lodash.kebabcase');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
-    super(args, opts)
+    super(args, opts);
 
     this.option('reconfigure');
 
@@ -50,7 +50,7 @@ module.exports = class extends Generator {
               'short': `New directory '${answers.name}' created`,
               'value': true
             }
-          ]
+          ];
         },
         'when': typeof(this.props.newFolder) !== "boolean"
       },
