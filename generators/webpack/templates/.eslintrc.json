@@ -19,7 +19,9 @@
     <% } %>
     "prettier",
     "prettier/react",
+    <% if (options.typescript) { %>
     "prettier/@typescript-eslint"
+    <% } %>
 
   ],
   "plugins": ["react", "import", "prettier", "@typescript-eslint"],
