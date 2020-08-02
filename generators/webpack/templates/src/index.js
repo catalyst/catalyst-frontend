@@ -17,7 +17,8 @@ const renderComponent = (Component) => {
 renderComponent(App);
 
 // Webpack Hot Module Replacement API
-if (module.hot) { // only ever in dev
+if (module.hot) {
+  // only ever in dev
   module.hot.accept('./app', () => {
     // global-require
     renderComponent(require('./app').default); // eslint-disable-line

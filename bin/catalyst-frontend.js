@@ -7,7 +7,7 @@ var options = require('yargs').argv;
 var env = yeoman.createEnv();
 
 if (options.reconfigure) {
-  options = { 'reconfigure': true };
+  options = {'reconfigure': true};
 } else {
   options = {};
 }
