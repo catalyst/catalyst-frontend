@@ -15,11 +15,16 @@
     "airbnb",
     "airbnb/hooks",
     <% if (options.typescript) { %>
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
     <% } %>
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint"
+
   ],
+  "plugins": ["react", "import", "prettier", "@typescript-eslint"],
   "parserOptions": {
-    "ecmaVersion": 2018,<% if (options.react) { %>
+    "ecmaVersion": 2020,<% if (options.react) { %>
     "ecmaFeatures": {
       "jsx": true
     },<% } %>
@@ -43,11 +48,15 @@
     "max-len": ["warn", { "code": 100 , "ignoreComments": true }],
     "quotes": ["warn", "single", { "allowTemplateLiterals": true }]<% if (options.react) { %>,
     "import/no-unresolved": 0,
+    "prettier/prettier": ["error"],
     "react/destructuring-assignment": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "react/jsx-wrap-multilines": 0,
     <% if (options.typescript) { %>
       "react/prop-types": 0,
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/explicit-member-accessibility": "off",
+      "@typescript-eslint/no-object-literal-type-assertion": "off",
       <% } %>
     "react/jsx-no-bind": ["error", {
       "ignoreDOMComponents": false,
