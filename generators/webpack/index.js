@@ -18,8 +18,10 @@ module.exports = class extends Generator {
       'es6-promise',
       'eslint',
       'eslint-config-airbnb',
+      'eslint-config-prettier',
       'eslint-loader',
       'eslint-plugin-import',
+      'eslint-plugin-prettier',
       'eslint-plugin-react',
       'eslint-plugin-react-hooks',
       'eslint-plugin-jsx-a11y',
@@ -29,6 +31,7 @@ module.exports = class extends Generator {
       'node-sass',
       'postcss-flexbugs-fixes',
       'postcss-loader',
+      'prettier',
       'sass-loader',
       'style-loader',
       'stylelint',
@@ -231,6 +234,12 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('.eslintrc.json'),
       this.destinationPath('.eslintrc.json'),
+      {options: this.props}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('.prettierrc.js'),
+      this.destinationPath('.prettierrc.js'),
       {options: this.props}
     );
 
