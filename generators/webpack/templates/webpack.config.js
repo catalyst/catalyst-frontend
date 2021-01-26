@@ -111,10 +111,12 @@ switch (env) {
               {
                 loader: 'postcss-loader',
                 options: {
-                  plugins: [
-                    autoprefixer(),
-                    flexfixes()
-                  ]
+                  postcssOptions: {
+                    plugins: [
+                      autoprefixer(),
+                      flexfixes()
+                    ]
+                  }
                 }
               },
               {
@@ -150,10 +152,12 @@ switch (env) {
                 {
                   loader: 'postcss-loader',
                   options: {
-                    plugins: [
-                      autoprefixer(),
-                      flexfixes()
-                    ]
+                    postcssOptions: {
+                      plugins: [
+                        autoprefixer(),
+                        flexfixes()
+                      ]
+                    }
                   }
                 },
                 {

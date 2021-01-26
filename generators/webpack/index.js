@@ -38,8 +38,8 @@ module.exports = class extends Generator {
       'stylelint-config-standard',
       'stylelint-webpack-plugin',
       'url-loader',
-      'webpack',
-      'webpack-cli',
+      'webpack@4',
+      'webpack-cli@3',
       'webpack-dev-server',
       'webpack-merge'
     ];
