@@ -4,8 +4,8 @@
   "description": "Frontend build process created by catalyst-frontend",
   "main": "<%= options.src %>/index.js<% if (options.react) { %>x<% } %>",
   "scripts": {
-    "build": "rm -rf ./<%= options.dist %> && ./node_modules/.bin/webpack -p",
-    "start": "./node_modules/.bin/webpack-dev-server --hot --inline --mode development"<% if (options.jest) { %>,
+    "build": "rm -rf ./<%= options.dist %> && NODE_ENV=production webpack-cli",
+    "start": "webpack-cli serve --mode development"<% if (options.jest) { %>,
     "test": "./node_modules/.bin/jest",
     "test:watch": "./node_modules/.bin/jest --watch",
     "test:coverage": "./node_modules/.bin/jest --coverage"<% } %>,
