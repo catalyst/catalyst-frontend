@@ -13,7 +13,7 @@ let config = {};
 // config that is shared between all types of build (dev and prod)
 const common = {
   entry: ['@babel/polyfill', 'whatwg-fetch', './<%= options.src %>/index.<% if (options.typescript) { %>t<% } else { %>j<% } %>s<% if (options.react) { %>x<% } %>'],
-
+  target: 'web',
   output: {
     path: path.resolve(__dirname, '<%= options.dist %>'),
     publicPath: '/',
@@ -82,7 +82,10 @@ const common = {
     <% } else { %>
       extensions: ['.js'<% if (options.react) { %>, '.jsx'<% } %>, '.json', '.scss'],
     <% } %>
-    modules: [path.resolve(__dirname, '<%= options.src %>'), 'node_modules']
+    modules: [path.resolve(__dirname, '<%= options.src %>'), 'node_modules'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
   }
 };
 
@@ -90,9 +93,12 @@ const common = {
 switch (env) {
   case 'dev':
     config = merge(common, {
-      devtool: 'cheap-module-eval-source-map',
+      devtool: 'eval-cheap-module-source-map',
 
       devServer: {
+        hot: true,
+        hotOnly: true,
+        inline: true,
         historyApiFallback: true // enables reloads of routed pages
         // if you need to proxy a backend server this is the place to do it:
         // see https://webpack.js.org/configuration/dev-server/#devserver-proxy

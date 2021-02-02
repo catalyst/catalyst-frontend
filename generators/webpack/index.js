@@ -11,6 +11,7 @@ module.exports = class extends Generator {
       '@babel/core',
       '@babel/preset-env',
       '@babel/plugin-proposal-object-rest-spread',
+      "@hot-loader/react-dom",
       'autoprefixer',
       'babel-loader',
       'css-loader',
@@ -26,10 +27,11 @@ module.exports = class extends Generator {
       'eslint-plugin-jsx-a11y',
       'mini-css-extract-plugin',
       'file-loader',
-      'html-webpack-plugin',
+      'html-webpack-plugin@4',
       'node-sass',
+      'postcss',
       'postcss-flexbugs-fixes',
-      'postcss-loader',
+      'postcss-loader@4',
       'prettier',
       'sass-loader',
       'style-loader',
@@ -39,7 +41,7 @@ module.exports = class extends Generator {
       'stylelint-webpack-plugin',
       'url-loader',
       'webpack@4',
-      'webpack-cli@3',
+      'webpack-cli',
       'webpack-dev-server',
       'webpack-merge'
     ];
@@ -178,7 +180,10 @@ module.exports = class extends Generator {
     }
 
     if (this.props.storybook) {
-      this.projectPackages.push('@storybook/react');
+      this.packages.push('@storybook/react');
+      this.packages.push('@storybook/addon-actions');
+      this.packages.push('@storybook/addon-essentials');
+      this.packages.push('@storybook/addon-links');
     }
   }
 
@@ -350,14 +355,14 @@ module.exports = class extends Generator {
 
     if (this.props.storybook) {
       this.fs.copyTpl(
-        this.templatePath('.storybook/config.js'),
-        this.destinationPath('.storybook/config.js'),
+        this.templatePath('.storybook'),
+        this.destinationPath('.storybook'),
         {options: this.props}
       );
 
       this.fs.copyTpl(
-        this.templatePath('stories/index.js'),
-        this.destinationPath('stories/index.js'),
+        this.templatePath('stories'),
+        this.destinationPath('src/stories'),
         {options: this.props}
       );
     }

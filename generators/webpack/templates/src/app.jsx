@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import React from 'react';
 
 // if you are integrating redux this is a good place to wrap your app in <Provider store={store}>
@@ -11,4 +12,4 @@ const App = () => (
   </p>
 );
 
-export default App;
+export default hot(App);
