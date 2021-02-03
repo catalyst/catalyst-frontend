@@ -26,13 +26,23 @@ module.exports = class extends Generator {
 
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
 
-    this.log(
-      chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.'),
-      chalk.white('\n\nRun'),
-      chalk.blue('npm start'),
-      chalk.white('to start developing, or read'),
-      chalk.blue('README.md'),
-      chalk.white('for more details.')
-    );
+    if (this.props.projectType === 'react') {
+      this.log(
+        chalk.white('\n\nRun'),
+        chalk.blue('npm install && npm start'),
+        chalk.white('to start developing, or read'),
+        chalk.blue('README.md'),
+        chalk.white('for more details.')
+      );
+    } else {
+      this.log(
+        chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.'),
+        chalk.white('\n\nRun'),
+        chalk.blue('npm start'),
+        chalk.white('to start developing, or read'),
+        chalk.blue('README.md'),
+        chalk.white('for more details.')
+      );
+    }
   }
 };

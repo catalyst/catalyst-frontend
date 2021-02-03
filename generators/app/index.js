@@ -36,6 +36,23 @@ module.exports = class extends Generator {
       },
       {
         'type': 'list',
+        'name': 'projectType',
+        'message': 'Choose project starter',
+        'choices': [
+          {
+            'name': 'React project (with Typescript, Webpack and Sass)',
+            'short': 'React',
+            'value': 'react'
+          },
+          {
+            'name': 'Custom configuration',
+            'short': 'Custom',
+            'value': 'custom'
+          }
+        ]
+      },
+      {
+        'type': 'list',
         'name': 'newFolder',
         'message': 'Where do you want your build process to be installed?',
         'choices': (answers) => {
@@ -52,8 +69,9 @@ module.exports = class extends Generator {
             }
           ];
         },
-        'when': typeof(this.props.newFolder) !== "boolean"
+        'when': typeof(this.props.newFolder) !== "boolean" && this.props.projectType !== 'custom'
       },
+
       {
         'type': 'list',
         'name': 'buildType',
@@ -70,7 +88,7 @@ module.exports = class extends Generator {
             'value': 'webpack'
           }
         ],
-        'when': !this.props.buildType
+        'when': !this.props.buildType && this.props.projectType === 'custom'
       }
     ];
 
@@ -80,27 +98,43 @@ module.exports = class extends Generator {
   }
 
   default() {
+      // all non custom projects should be 
+      // in new folder only
+      // because there is currently no option for upgrading 
+    if (this.props.projectType !== 'custom') {
+      this.props.newFolder === true;
+    }
+
     if (this.props.newFolder && !this.props.ignoreNewFolderSettings) {
       mkdirp(this.props.name);
       this.destinationRoot(this.destinationPath(this.props.name));
     }
 
-    if (this.props.buildType === 'gulp') {
-      this.composeWith(require.resolve('../gulp'),  {
-        'name': this.props.name, // used in package.json template
-        'reconfigure': this.options.reconfigure
-      });
-    } else {
-      // it's Webpack
-      this.composeWith(require.resolve('../webpack'),  {
-        'name': this.props.name, // used in package.json template
-        'reconfigure': this.options.reconfigure
-      });
-    }
+    switch (this.props.projectType) {
+      case 'react':
+          this.composeWith(require.resolve('../react-project'),  {
+            'name': this.props.name, // used in package.json template
+            'reconfigure': this.options.reconfigure
+          });
+        break;
+      default:
+        if (this.props.buildType === 'gulp') {
+          this.composeWith(require.resolve('../gulp'),  {
+            'name': this.props.name, // used in package.json template
+            'reconfigure': this.options.reconfigure
+          });
+        } else {
+          // it's Webpack
+          this.composeWith(require.resolve('../webpack'),  {
+            'name': this.props.name, // used in package.json template
+            'reconfigure': this.options.reconfigure
+          });
+        }
 
-    this.composeWith(require.resolve('../cleanup'),  {
-      'props': this.props
-    });
+        this.composeWith(require.resolve('../cleanup'),  {
+          'props': this.props
+        });
+    }
   }
 
   writing() {
