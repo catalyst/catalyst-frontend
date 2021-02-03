@@ -1,0 +1,5 @@
+// this styles index should only contain imports of libraries and base styles.
+// styles for particular components should be included directly from the component.
+
+@import 'base-styles/variables'; // variables - include these wherever they are needed
+@import 'base-styles/base'; // body, typography, basic elements
