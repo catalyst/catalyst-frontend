@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const flexfixes = require('postcss-flexbugs-fixes');
@@ -73,8 +74,8 @@ module.exports = {
     ],
   },
 
-  plugins: isDev
-    ? [
+  plugins:
+    [
         new HtmlWebpackPlugin({
           template: './src/index.html',
           hash: true,
@@ -83,8 +84,11 @@ module.exports = {
           context: path.resolve(__dirname, 'src'),
           files: '**/*.s?(a|c)ss',
         }),
-      ]
-    : [new MiniCssExtractPlugin()],
+        new webpack.ProvidePlugin({
+          Promise: ['es6-promise', 'Promise'],
+        }),
+        !isDev && new MiniCssExtractPlugin(),
+      ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
 
