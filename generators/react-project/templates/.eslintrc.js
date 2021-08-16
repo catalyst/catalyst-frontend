@@ -22,8 +22,6 @@ module.exports = {
     'airbnb/hooks', // rules for react hooks
     'plugin:@typescript-eslint/recommended', // typescript syntax
     'prettier', // code formating rules
-    'prettier/react',
-    'prettier/@typescript-eslint',
   ],
   plugins: ['react', 'import', 'prettier', '@typescript-eslint'],
   parserOptions: {
@@ -55,7 +53,7 @@ module.exports = {
     'max-len': ['warn', { code: 100, ignoreComments: true }],
     quotes: ['warn', 'single', { allowTemplateLiterals: true }],
     'import/no-unresolved': 0,
-    'prettier/prettier': ['error'],
+    'prettier/prettier': ['warn'],
     'react/destructuring-assignment': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/jsx-wrap-multilines': 0,
