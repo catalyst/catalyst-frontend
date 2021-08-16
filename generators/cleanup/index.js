@@ -1,6 +1,6 @@
-'use strict';
-const Generator = require('yeoman-generator');
-const chalk = require('chalk');
+"use strict";
+const Generator = require("yeoman-generator");
+const chalk = require("chalk");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -10,9 +10,7 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log(
-      chalk.green('\nComplete!')
-    );
+    this.log(chalk.green("\nComplete!"));
 
     if (this.props.newFolder && !this.props.ignoreNewFolderSettings) {
       this.log(
@@ -26,23 +24,15 @@ module.exports = class extends Generator {
 
     this.config.set(Object.assign({}, this.config.getAll(), this.props));
 
-    if (this.props.projectType === 'react') {
-      this.log(
-        chalk.white('\n\nRun'),
-        chalk.blue('npm install && npm start'),
-        chalk.white('to start developing, or read'),
-        chalk.blue('README.md'),
-        chalk.white('for more details.')
-      );
-    } else {
-      this.log(
-        chalk.white('\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`.'),
-        chalk.white('\n\nRun'),
-        chalk.blue('npm start'),
-        chalk.white('to start developing, or read'),
-        chalk.blue('README.md'),
-        chalk.white('for more details.')
-      );
-    }
+    this.log(
+      chalk.white(
+        "\nWe recommend that if you received npm security warnings during\ninstallation that you run `npm audit fix`."
+      ),
+      chalk.white("\n\nRun"),
+      chalk.blue("npm start"),
+      chalk.white("to start developing, or read"),
+      chalk.blue("README.md"),
+      chalk.white("for more details.")
+    );
   }
 };
