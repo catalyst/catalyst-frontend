@@ -9,6 +9,27 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
+const getPlugins = () => {
+  const plugins = [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      hash: true,
+    }),
+    new StyleLintPlugin({
+      context: path.resolve(__dirname, 'src'),
+      files: '**/*.s?(a|c)ss',
+    }),
+    new webpack.ProvidePlugin({
+      Promise: ['es6-promise', 'Promise'],
+    }),
+  ];
+  if (isDev) {
+    plugins.push(new MiniCssExtractPlugin());
+  }
+
+  return plugins;
+};
+
 module.exports = {
   mode: isDev ? 'development' : 'production',
   devtool: isDev ? 'eval-cheap-module-source-map' : 'source-map',
@@ -73,22 +94,7 @@ module.exports = {
       },
     ],
   },
-
-  plugins:
-    [
-        new HtmlWebpackPlugin({
-          template: './src/index.html',
-          hash: true,
-        }),
-        new StyleLintPlugin({
-          context: path.resolve(__dirname, 'src'),
-          files: '**/*.s?(a|c)ss',
-        }),
-        new webpack.ProvidePlugin({
-          Promise: ['es6-promise', 'Promise'],
-        }),
-        !isDev && new MiniCssExtractPlugin(),
-      ],
+  plugins: getPlugins(),
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
 
