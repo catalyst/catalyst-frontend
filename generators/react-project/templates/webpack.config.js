@@ -23,7 +23,7 @@ const getPlugins = () => {
       Promise: ['es6-promise', 'Promise'],
     }),
   ];
-  if (isDev) {
+  if (!isDev) {
     plugins.push(new MiniCssExtractPlugin());
   }
 
