@@ -41,9 +41,9 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
-    hot: true,
-    hotOnly: true,
-    inline: true,
+    client: {
+      overlay: { errors: true, warnings: false }
+    },
     historyApiFallback: true, // enables reloads of routed pages
   },
   module: {
