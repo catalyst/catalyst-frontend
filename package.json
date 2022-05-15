@@ -1,11 +1,11 @@
 {
   "name": "catalyst-frontend",
-  "version": "1.1.2",
+  "version": "1.2.2",
   "description": "A configurable frontend build pipeline that caters for everything from simple SASS compilation only, right through to ES2015 plus React.",
   "homepage": "https://github.com/catalyst/catalyst-frontend",
   "author": {
-    "name": "Jen Zajac",
-    "email": "jen@catalyst.net.nz",
+    "name": "Catalyst",
+    "email": "frontend@catalyst.net.nz",
     "url": "https://github.com/catalyst"
   },
   "bin": {
