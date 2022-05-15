@@ -6,6 +6,7 @@ const flexfixes = require('postcss-flexbugs-fixes');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -23,6 +24,11 @@ const getPlugins = () => {
       Promise: ['es6-promise', 'Promise'],
     }),
   ];
+
+  if (isDev) {
+    plugins.push(new ForkTsCheckerWebpackPlugin());
+  }
+
   if (!isDev) {
     plugins.push(new MiniCssExtractPlugin());
   }
@@ -42,7 +48,7 @@ module.exports = {
   },
   devServer: {
     client: {
-      overlay: { errors: true, warnings: false }
+      overlay: { errors: true, warnings: false },
     },
     historyApiFallback: true, // enables reloads of routed pages
   },
