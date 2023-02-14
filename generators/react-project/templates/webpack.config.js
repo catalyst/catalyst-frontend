@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -27,6 +28,7 @@ const getPlugins = () => {
 
   if (isDev) {
     plugins.push(new ForkTsCheckerWebpackPlugin());
+    plugins.push(new ReactRefreshWebpackPlugin());
   }
 
   if (!isDev) {
@@ -47,6 +49,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
+    hot: true,
     client: {
       overlay: { errors: true, warnings: false },
     },
@@ -55,15 +58,12 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre', // lint files before they are transformed, config in .eslintrc.json
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader', // config in .tsconfig
+        loader: 'babel-loader', // config in .babelrc
+        options: {
+          plugins: [isDev && require.resolve('react-refresh/babel')].filter(Boolean),
+        },
       },
       {
         test: /\.scss$/,
@@ -103,10 +103,6 @@ module.exports = {
   plugins: getPlugins(),
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
-
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-    alias: {
-      'react-dom': '@hot-loader/react-dom',
-    },
   },
 };
