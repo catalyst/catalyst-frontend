@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import ExampleComponent from 'examples/ExampleComponent/ExampleComponent';
 
@@ -13,4 +12,4 @@ function App() {
   );
 }
 
-export default hot(App);
+export default App;
