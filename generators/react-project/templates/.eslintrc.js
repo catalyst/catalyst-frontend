@@ -21,7 +21,6 @@ module.exports = {
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'plugin:storybook/recommended',
   ],
   plugins: ['react', 'import', 'prettier', '@typescript-eslint'],
   parserOptions: {
