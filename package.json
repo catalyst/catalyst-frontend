@@ -29,7 +29,7 @@
   "devDependencies": {
     "eslint": "^6.7.2",
     "eslint-config-xo-space": "^0.22.0",
-    "mocha": "^8.1.0",
+    "mocha": "^10.2.0",
     "path": "^0.12.7",
     "rimraf": "^3.0.2",
     "yeoman-assert": "^3.1.1",
